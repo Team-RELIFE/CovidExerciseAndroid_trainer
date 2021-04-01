@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#54BFEF"
+    android:background="@color/white"
     tools:context=".JoinActivity2">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="JOIN"
-        android:textColor="@color/white"
+        android:textColor="#54BFEF"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
@@ -23,47 +23,25 @@
         android:id="@+id/joinText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2. 신체정보 입력"
+        android:text="2. 사진 추가"
         android:textStyle="bold"
-        android:textColor="@color/white"
+        android:textColor="#54BFEF"
         android:textSize="17dp"
         android:layout_below="@+id/joinText1"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"/>
 
-    <EditText
-        android:id="@+id/cmEditText"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_below="@+id/joinText2"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="cm"
+    <ImageButton
+        android:id="@+id/galleryBtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/gallery"
         android:layout_below="@+id/joinText2"
-        android:layout_toRightOf="@+id/cmEditText"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitCenter"
+        android:background="#00ff0000"/>
 
-    <EditText
-        android:id="@+id/kgEditText"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_below="@+id/cmEditText"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="kg"
-        android:layout_below="@+id/cmEditText"
-        android:layout_toRightOf="@+id/kgEditText"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:layout_marginTop="20dp"/>
 
     <ImageButton
         android:id="@+id/JoinOkBtn"
@@ -72,7 +50,6 @@
         android:layout_marginTop="50dp"
         android:src="@drawable/signin"
         android:scaleType="fitCenter"
-        android:layout_below="@+id/kgEditText"
         android:layout_centerInParent="true"
         android:background="#00ff0000"/>
 
