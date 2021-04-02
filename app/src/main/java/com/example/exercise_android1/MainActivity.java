@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.JoinBtn: /*회원가입 버튼 눌렀을 때 JoinActivity1으로 이동*/
-                Intent intent=new Intent(MainActivity.this,JoinActivity1.class);
+                Intent intent=new Intent(MainActivity.this,JoinActivity2.class);
                 startActivity(intent);
                 break;
         }

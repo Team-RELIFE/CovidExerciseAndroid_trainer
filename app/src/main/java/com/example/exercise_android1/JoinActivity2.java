@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.InputStream;
@@ -18,6 +20,7 @@ public class JoinActivity2 extends AppCompatActivity {
 
     ImageButton joinOkBtn; /*회원가입 완료 버튼*/
     ImageButton galleryBtn; /*갤러리 이동 버튼*/
+    ImageButton NicknameModifyBtn; /*닉네임 수정 버튼*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,20 @@ public class JoinActivity2 extends AppCompatActivity {
 
         joinOkBtn=(ImageButton)findViewById(R.id.JoinOkBtn);
         galleryBtn=(ImageButton)findViewById(R.id.galleryBtn);
+        NicknameModifyBtn=(ImageButton)findViewById(R.id.nickname_modify);
+        ImageView[] imageViews=new ImageView[5];
+
+        /*아이콘 색상 변경*/
+        imageViews[0]=(ImageView)findViewById(R.id.JoinImage1);
+        imageViews[1]=(ImageView)findViewById(R.id.JoinImage2);
+        imageViews[2]=(ImageView)findViewById(R.id.JoinImage3);
+        imageViews[3]=(ImageView)findViewById(R.id.JoinImage4);
+        imageViews[4]=(ImageView)findViewById(R.id.JoinImage5);
+
+        for(int i=0;i<5;i++)
+            imageViews[i].setColorFilter(Color.parseColor("#000000"));
+
+        NicknameModifyBtn.setColorFilter(Color.parseColor("#000000"));
 
         /*jsp와 연동하여 db에 회원정보 저장하는 알고리즘 필요*/
         /*회원가입 성공 토스트메세지 필요*/

@@ -7,50 +7,330 @@
     android:background="@color/white"
     tools:context=".JoinActivity2">
 
-    <TextView
-        android:id="@+id/joinText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="JOIN"
-        android:textColor="#54BFEF"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="40dp"
-        android:textSize="40dp"/>
+    <ScrollView
+        android:id="@+id/scrollview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/joinText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2. 사진 추가"
-        android:textStyle="bold"
-        android:textColor="#54BFEF"
-        android:textSize="17dp"
-        android:layout_below="@+id/joinText1"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/galleryBtn"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/gallery"
-        android:layout_below="@+id/joinText2"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="fitCenter"
-        android:background="#00ff0000"/>
+            <TextView
+                android:id="@+id/JoinMainText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JOIN"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"/>
+
+        <ImageButton
+            android:id="@+id/galleryBtn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/photo2"
+            android:layout_below="@+id/JoinMainText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter"
+            android:background="#00ff0000"/>
+
+            <EditText
+                android:id="@+id/nickname"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/galleryBtn"
+                android:layout_centerHorizontal="true"
+                android:hint="닉네임"
+                android:gravity="center"
+                android:textSize="17dp" />
+
+            <ImageButton
+                android:id="@+id/nickname_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_stat_name"
+                android:layout_toRightOf="@+id/nickname"
+                android:layout_marginTop="20dp"
+                android:background="#00ff0000"
+                android:layout_below="@+id/galleryBtn"/>
+
+            <ImageView
+                android:id="@+id/JoinImage1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/nickname"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_stat_name" />
+
+            <EditText
+                android:id="@+id/joinIdEdit"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/nickname"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="16dp"
+                android:layout_toRightOf="@+id/JoinImage1"
+                android:hint="이메일" />
+
+            <ImageView
+                android:id="@+id/JoinImage2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_stat_lock"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@+id/JoinImage1"/>
+
+            <EditText
+                android:id="@+id/joinPassEdit1"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@+id/JoinImage2"
+                android:layout_below="@+id/joinIdEdit"
+                android:inputType="textPassword"
+                android:textSize="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
+                android:hint="비밀번호" />
+
+            <ImageView
+                android:id="@+id/JoinImage3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_stat_lock"
+                android:layout_below="@+id/JoinImage2"/>
+
+            <EditText
+                android:id="@+id/joinPassEdit2"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@+id/JoinImage3"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
+                android:inputType="textPassword"
+                android:textSize="16dp"
+                android:layout_below="@+id/joinPassEdit1"
+                android:hint="비밀번호 확인" />
+
+            <ImageView
+                android:id="@+id/JoinImage4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_stat_phone"
+                android:layout_below="@+id/JoinImage3"/>
+
+            <EditText
+                android:id="@+id/joinPhoneEdit"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/JoinImage4"
+                android:layout_below="@+id/joinPassEdit2"
+                android:textSize="16dp"
+                android:hint="휴대폰 번호" />
+
+            <ImageView
+                android:id="@+id/JoinImage5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_stat_name"
+                android:layout_below="@+id/JoinImage4"/>
+
+            <EditText
+                android:id="@+id/joinNameEdit"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/JoinImage5"
+                android:layout_below="@+id/joinPhoneEdit"
+                android:textSize="16dp"
+                android:hint="이름" />
+
+        <ImageView
+            android:id="@+id/blogIcon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/naver"
+            android:layout_below="@+id/joinNameEdit"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:id="@+id/blogText"
+            android:text="blog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/blogIcon"
+            android:textSize="17dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/joinNameEdit"/>
+
+        <EditText
+            android:id="@+id/blogAddress"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/blogIcon"
+            android:layout_centerHorizontal="true"
+            android:hint="blog url 입력"
+            android:textSize="16dp"
+            android:layout_marginLeft="15dp"/>
+
+        <ImageView
+            android:id="@+id/instaIcon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/instagram"
+            android:layout_below="@+id/blogAddress"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:text="instagram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/instaIcon"
+            android:textSize="17dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_below="@+id/blogAddress"/>
+
+        <EditText
+            android:id="@+id/instaAddress"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/instaIcon"
+            android:layout_centerHorizontal="true"
+            android:hint="blog url 입력"
+            android:textSize="16dp"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/careerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경력사항 (최대 5개)"
+            android:layout_below="@+id/instaAddress"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"/>
+
+            <ScrollView
+                android:id="@+id/scrollview2"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/careerText"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/careerEdit1"
+                        android:layout_width="350dp"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/careerText"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start"
+                        android:hint="경력"
+                        android:background="@drawable/border"
+                        android:textSize="15dp"
+                        android:layout_centerHorizontal="true"/>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가능한 수업 시간"
+                android:layout_below="@+id/scrollview2"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:id="@+id/weekdayText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="평일"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@+id/timeText"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/HourEdit"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timeText"
+                android:background="@drawable/border"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/weekdayText"/>
+
+            <TextView
+                android:id="@+id/weekdayHourText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시"
+                android:layout_below="@+id/timeText"
+                android:layout_toRightOf="@+id/HourEdit"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <EditText
+                android:id="@+id/MinutesEdit"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timeText"
+                android:background="@drawable/border"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/weekdayHourText"/>
+
+            <TextView
+                android:id="@+id/weekdayMinutesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시"
+                android:layout_below="@+id/timeText"
+                android:layout_toRightOf="@+id/MinutesEdit"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
 
 
-    <ImageButton
-        android:id="@+id/JoinOkBtn"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/signin"
-        android:scaleType="fitCenter"
-        android:layout_centerInParent="true"
-        android:background="#00ff0000"/>
+            <ImageButton
+                android:id="@+id/JoinOkBtn"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/signin"
+                android:scaleType="fitCenter"
+                android:layout_below="@+id/scrollview2"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="#00ff0000"/>
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>
