@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#54BFEF"
+    android:background="@color/white"
     tools:context=".MainActivity2">
 
     <RelativeLayout
@@ -14,6 +14,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            android:background="#54BFEF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -50,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/video_image"
             android:text="PT"
-            android:textColor="@color/white"
+            android:textColor="#54BFEF"
             android:textSize="36dp"
             android:textStyle="bold"
             android:layout_marginLeft="10dp"/>
@@ -62,8 +63,8 @@
             android:layout_toRightOf="@+id/video_image"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="10dp"
-            android:text="받으러가기"
-            android:textColor="@color/white"
+            android:text="하러가기"
+            android:textColor="#54BFEF"
             android:textSize="30dp"/>
 
         <ImageButton
@@ -81,8 +82,8 @@
             android:id="@+id/main2_Text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나에게 맞는 PT선생님을 만나고 싶다면?"
-            android:textColor="@color/white"
+            android:text="더 많은 수강생들을 만나고 싶다면?"
+            android:textColor="#54BFEF"
             android:textSize="15dp"
             android:layout_marginTop="80dp"
             android:layout_centerInParent="true"
@@ -95,9 +96,9 @@
             android:layout_below="@+id/main2_Text2"
             android:layout_marginTop="15dp"
             android:layout_centerInParent="true"
-            android:backgroundTint="@color/white"
-            android:textColor="#54BFEF"
-            android:text="PT쌤 찾으러가기"
+            android:backgroundTint="#54BFEF"
+            android:textColor="@color/white"
+            android:text="홍보하러 가기"
             android:textStyle="bold"
             android:textSize="20dp"/>
 

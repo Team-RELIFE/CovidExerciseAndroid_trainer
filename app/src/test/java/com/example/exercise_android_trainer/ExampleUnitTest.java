@@ -1,4 +1,4 @@
-package com.example.exercise_android1;
+package com.example.exercise_android_trainer;
 
 import org.junit.Test;
 

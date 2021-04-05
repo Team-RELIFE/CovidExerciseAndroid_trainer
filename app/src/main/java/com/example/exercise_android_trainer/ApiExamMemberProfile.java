@@ -1,8 +1,4 @@
-package com.example.exercise_android1;
-
-import android.content.Context;
-
-import com.nhn.android.naverlogin.OAuthLogin;
+package com.example.exercise_android_trainer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

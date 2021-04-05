@@ -1,15 +1,12 @@
-package com.example.exercise_android1;
+package com.example.exercise_android_trainer;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.nhn.android.naverlogin.OAuthLogin;
@@ -22,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
     OAuthLoginButton naverBtn;
     private static OAuthLogin mOAuthLoginInstance; /*네이버 아이디로 로그인의 모든 연산을 수행하는 클래스*/
     private static Context mContext;
-    private static String OAUTH_CLIENT_ID = "WjYSmWoJvcv3eeJul6nI"; /*앱 등록 후 발급받은 클라이언트 ID*/
-    private static String OAUTH_CLIENT_SECRET = "MRpB0hTtur"; /*앱 등록 후 발급받은 클라이언트 비밀번호*/
+    private static String OAUTH_CLIENT_ID = "x75hOTqK0cxCz7lAugqC"; /*앱 등록 후 발급받은 클라이언트 ID*/
+    private static String OAUTH_CLIENT_SECRET = "Tcr31DKBaM"; /*앱 등록 후 발급받은 클라이언트 비밀번호*/
     private static String OAUTH_CLIENT_NAME = "네이버 아이디로 로그인하기"; /*로그인 시 화면에 표시할 앱 이름*/
     private long time=0;
 
