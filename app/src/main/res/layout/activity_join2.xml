@@ -227,6 +227,7 @@
             android:text="경력사항 (최대 5개)"
             android:layout_below="@+id/instaAddress"
             android:textStyle="bold"
+            android:textSize="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"/>
 
@@ -312,7 +313,7 @@
             <Button
                 android:id="@+id/timeaddBtn"
                 android:layout_width="70dp"
-                android:layout_height="33dp"
+                android:layout_height="30dp"
                 android:layout_below="@+id/scrollview2"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="30dp"
@@ -333,7 +334,6 @@
                 android:layout_marginLeft="23dp"
                 android:layout_below="@+id/hourEdit1"/>
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="320dp"
@@ -342,6 +342,7 @@
                 android:layout_marginTop="10dp"
                 android:scrollbars="vertical"
                 android:layout_centerHorizontal="true"
+                android:background="@drawable/border"
                 android:layout_below="@+id/timeTextList"/>
 
             <ImageButton
@@ -351,19 +352,96 @@
                 android:src="@drawable/signin"
                 android:scaleType="fitCenter"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/recyclerView"
-                android:layout_marginTop="30dp"
+                android:layout_below="@+id/listView2"
+                android:layout_marginTop="20dp"
                 android:background="#00ff0000"/>
 
             <TextView
                 android:id="@+id/workAreaText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="근무지역"
+                android:text="자격증 (최대 5개)"
                 android:textStyle="bold"
+                android:textSize="15dp"
                 android:layout_marginLeft="22dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_below="@+id/recyclerView"/>
+
+            <EditText
+                android:id="@+id/workAreaEdit"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:hint="자격증 입력"
+                android:textSize="14dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/workAreaText"/>
+
+            <Button
+                android:id="@+id/workAddBtn"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/workAreaEdit"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="추가"
+                android:textSize="13dp"
+                android:textColor="@color/white"
+                android:background="@drawable/roundshape"
+                android:backgroundTint="@color/black"/>
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="320dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border"
+                android:layout_below="@+id/workAddBtn"/>
+
+            <TextView
+                android:id="@+id/prizeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수상 경력 (최대 5개)"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_below="@+id/listView"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:id="@+id/prizeEdit"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/prizeText"
+                android:layout_centerHorizontal="true"
+                android:textSize="15dp"
+                android:hint="수상 경력 입력"/>
+
+            <Button
+                android:id="@+id/prizeAddBtn"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:text="추가"
+                android:textSize="13dp"
+                android:layout_below="@+id/prizeEdit"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"
+                android:background="@drawable/roundshape"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"/>
+
+            <ListView
+                android:id="@+id/listView2"
+                android:layout_width="320dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/prizeAddBtn"
+                android:background="@drawable/border"
+                android:layout_centerHorizontal="true"/>
+
         </RelativeLayout>
 
     </ScrollView>
