@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -67,6 +68,10 @@ public class MainActivity2 extends AppCompatActivity {
                     Intent intent=new Intent(MainActivity2.this,MainActivity.class);
                     startActivity(intent);
                     finish();
+                }
+                if (id==R.id.menu_calendar){
+                    Intent intent=new Intent(MainActivity2.this,CalendarActivity.class);
+                    startActivity(intent);
                 }
                 return false;
             }

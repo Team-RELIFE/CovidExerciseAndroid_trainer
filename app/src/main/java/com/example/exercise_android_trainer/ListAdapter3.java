@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListAdapter2 extends BaseAdapter {
-    ArrayList<ListviewData2> arrayList=new ArrayList<>();
+public class ListAdapter3 extends BaseAdapter {
+
+    ArrayList<ListViewData3> arrayList=new ArrayList<>();
     Context context;
 
     @Override
@@ -31,19 +33,24 @@ public class ListAdapter2 extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         context=parent.getContext();
-        ListviewData2 listviewData2=arrayList.get(position);
+        ListViewData3 listViewData3=arrayList.get(position);
 
         if(convertView==null){
             LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView=inflater.inflate(R.layout.item3,parent,false);
+            convertView=inflater.inflate(R.layout.item,parent,false);
         }
-        TextView textView=convertView.findViewById(R.id.prizeTextInList);
-        textView.setText(listviewData2.getText());
+        TextView textView1=convertView.findViewById(R.id.hourText1);
+        TextView textView2=convertView.findViewById(R.id.hourText2);
+        TextView textView3=convertView.findViewById(R.id.dayText);
+        textView1.setText(listViewData3.getStartTime());
+        textView2.setText(listViewData3.getEndTime());
+        textView3.setText(listViewData3.getSelectedDay());
+
         return convertView;
     }
 
-    public void addItem(ListviewData2 data2){
-        arrayList.add(data2);
+    public void addItem(ListViewData3 data3){
+        arrayList.add(data3);
     }
     public void removeItem(int position){
         arrayList.remove(position);

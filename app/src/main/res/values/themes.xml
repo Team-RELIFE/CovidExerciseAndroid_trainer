@@ -13,4 +13,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="themeOnverlay_timePicker" parent="@style/ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:windowBackground">#FFFFFF</item>
+        <item name="colorControlActivated">#54BFEF</item>
+        <item name="colorAccent">#54BFEF</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
 </resources>

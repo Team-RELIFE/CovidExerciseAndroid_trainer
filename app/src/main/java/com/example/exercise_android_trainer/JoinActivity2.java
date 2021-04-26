@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,19 +33,14 @@ public class JoinActivity2 extends AppCompatActivity {
 
     ImageButton joinOkBtn,galleryBtn,NicknameModifyBtn; /*회원가입 완료,갤러리 이동,닉네임 수정 버튼*/
     Button addBtn,workaddBtn,prizeaddBtn; /*시간 등록,근무지 추가 버튼*/
-    RecyclerView recyclerView;
-    ListView listView,listView2;
-    ArrayList<Data> arrayList; /*리사이클러뷰용 arraylist*/
-    RecyclerAdapter recyclerAdapter; /*recyclerview용 어댑터*/
+    ListView listView,listView2,listView3;
     ListAdapter listAdapter; /*listview용 어댑터*/
     ListAdapter2 listAdapter2;
-    RecyclerDecoration recyclerDecoration; /*recyclerview 간격 조절*/
+    ListAdapter3 listAdapter3;
     EditText houredt1,houredt2,workAreaEdit,prizeEdit;
     String edt1,edt2,sp,edt3,edt4; /*edittext,spinner를 string형태로 변환*/
-    LinearLayoutManager linearLayoutManager;
     Spinner spinner; /*요일 선택 스피너*/
     ArrayAdapter arrayAdapter; /*spinner용 어댑터*/
-    DividerItemDecoration dividerItemDecoration; /*recyclerview 테두리 조절*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,27 +54,24 @@ public class JoinActivity2 extends AppCompatActivity {
         workaddBtn=(Button)findViewById(R.id.workAddBtn);
         prizeaddBtn=(Button)findViewById(R.id.prizeAddBtn);
 
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
-        recyclerAdapter=new RecyclerAdapter();
-        arrayList=new ArrayList<>();
+        //recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        //recyclerAdapter=new RecyclerAdapter();
+        //arrayList=new ArrayList<>();
 
-        recyclerDecoration=new RecyclerDecoration(10);
-        dividerItemDecoration=new DividerItemDecoration(recyclerView.getContext(),new LinearLayoutManager(this).getOrientation());
+        //recyclerDecoration=new RecyclerDecoration(10);
+        //dividerItemDecoration=new DividerItemDecoration(recyclerView.getContext(),new LinearLayoutManager(this).getOrientation());
 
-        /*시간 입력 edittext*/
-        houredt1=(EditText)findViewById(R.id.hourEdit1);
-        houredt2=(EditText)findViewById(R.id.hourEdit2);
-        linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false); /*리스트 형태 수직으로*/
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(recyclerAdapter); /*리사이클러뷰와 어댑터 연결*/
+        //linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false); /*리스트 형태 수직으로*/
+        //recyclerView.setLayoutManager(linearLayoutManager);
+        //recyclerView.setAdapter(recyclerAdapter); /*리사이클러뷰와 어댑터 연결*/
 
         spinner=(Spinner)findViewById(R.id.daySpinner);
         arrayAdapter=ArrayAdapter.createFromResource(this,R.array.day_list, android.R.layout.simple_spinner_dropdown_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter); /*스피너와 어댑터 연결*/
 
-        recyclerView.addItemDecoration(recyclerDecoration);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        //recyclerView.addItemDecoration(recyclerDecoration);
+        //recyclerView.addItemDecoration(dividerItemDecoration);
 
         listView=(ListView)findViewById(R.id.listView);
         listAdapter=new ListAdapter();
@@ -89,6 +82,13 @@ public class JoinActivity2 extends AppCompatActivity {
         listAdapter2=new ListAdapter2();
         listView2.setAdapter(listAdapter2);
         prizeEdit=(EditText)findViewById(R.id.prizeEdit);
+
+        listView3=(ListView)findViewById(R.id.listView3);
+        listAdapter3=new ListAdapter3();
+        listView3.setAdapter(listAdapter3);
+        /*시간 입력 edittext*/
+        houredt1=(EditText)findViewById(R.id.hourEdit1);
+        houredt2=(EditText)findViewById(R.id.hourEdit2);
 
         /*아이콘 배열*/
         ImageView[] imageViews=new ImageView[5];
@@ -104,6 +104,31 @@ public class JoinActivity2 extends AppCompatActivity {
             imageViews[i].setColorFilter(Color.parseColor("#000000"));
 
         NicknameModifyBtn.setColorFilter(Color.parseColor("#000000"));
+
+        /*항목 선택 시 삭제*/
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listAdapter.removeItem(position);
+                listAdapter.notifyDataSetChanged();
+            }
+        });
+
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listAdapter2.removeItem(position);
+                listAdapter2.notifyDataSetChanged();
+            }
+        });
+
+        listView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listAdapter3.removeItem(position);
+                listAdapter3.notifyDataSetChanged();
+            }
+        });
 
         View.OnClickListener onClickListener=new View.OnClickListener(){
             @Override
@@ -123,8 +148,8 @@ public class JoinActivity2 extends AppCompatActivity {
                         edt1=houredt1.getText().toString().trim();
                         edt2=houredt2.getText().toString().trim();
                         sp=spinner.getSelectedItem().toString();
-                        recyclerAdapter.addItem(new Data(edt1,edt2,sp)); /*addItem 메서드로 아이템 추가*/
-                        recyclerAdapter.notifyDataSetChanged(); /*변경 완료*/
+                        listAdapter3.addItem(new ListViewData3(edt1,edt2,sp));
+                        listAdapter3.notifyDataSetChanged();
                         break;
                     case R.id.workAddBtn:
                         edt3=workAreaEdit.getText().toString().trim();
@@ -135,6 +160,7 @@ public class JoinActivity2 extends AppCompatActivity {
                         edt4=prizeEdit.getText().toString().trim();
                         listAdapter2.addItem(new ListviewData2(edt4));
                         listAdapter2.notifyDataSetChanged();
+                        break;
                 }
             }
         };
@@ -143,36 +169,6 @@ public class JoinActivity2 extends AppCompatActivity {
         addBtn.setOnClickListener(onClickListener);
         workaddBtn.setOnClickListener(onClickListener);
         prizeaddBtn.setOnClickListener(onClickListener);
-    }
-
-    public void setListViewHeight(ListAdapter la,ListView lv){
-        int totalHeight=0;
-        int desiredWidth= View.MeasureSpec.makeMeasureSpec(lv.getWidth(), View.MeasureSpec.AT_MOST);
-
-        for (int size=0;size<lv.getCount();size++){
-            View view=la.getView(size,null,lv);
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight+=view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params=lv.getLayoutParams();
-        params.height=totalHeight+((lv.getDividerHeight())*(lv.getCount()-1));
-        lv.setLayoutParams(params);
-        lv.requestLayout();
-    }
-
-    public void setListViewHeight2(ListAdapter2 la2,ListView lv2){
-        int totalHeight=0;
-        int desiredWidth= View.MeasureSpec.makeMeasureSpec(lv2.getWidth(), View.MeasureSpec.AT_MOST);
-
-        for (int size=0;size<lv2.getCount();size++){
-            View view=la2.getView(size,null,lv2);
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight+=view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params=lv2.getLayoutParams();
-        params.height=totalHeight+((lv2.getDividerHeight())*(lv2.getCount()-1));
-        lv2.setLayoutParams(params);
-        lv2.requestLayout();
     }
 
     /*갤러리에서 선택한 이미지를 버튼에 띄움*/

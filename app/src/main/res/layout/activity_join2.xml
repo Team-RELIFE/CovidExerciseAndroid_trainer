@@ -224,7 +224,7 @@
             android:id="@+id/careerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="경력사항 (최대 5개)"
+            android:text="경력사항"
             android:layout_below="@+id/instaAddress"
             android:textStyle="bold"
             android:textSize="15dp"
@@ -251,7 +251,7 @@
                         android:layout_below="@+id/careerText"
                         android:layout_marginTop="5dp"
                         android:gravity="start"
-                        android:hint="경력"
+                        android:hint=" ex) oo헬스장 퍼스널 트레이너 2년 근무"
                         android:background="@drawable/border"
                         android:textSize="15dp"
                         android:layout_centerHorizontal="true"/>
@@ -263,7 +263,7 @@
                 android:id="@+id/timeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가능한 수업 시간 입력"
+                android:text="가능한 수업 시간 입력 (최대 7개)"
                 android:layout_below="@+id/scrollview2"
                 android:textSize="15dp"
                 android:textStyle="bold"
@@ -310,19 +310,21 @@
                 android:spinnerMode="dropdown"
                 android:layout_toRightOf="@+id/hourEdit2"/>
 
+
             <Button
                 android:id="@+id/timeaddBtn"
-                android:layout_width="70dp"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:layout_below="@+id/scrollview2"
-                android:layout_alignParentRight="true"
                 android:layout_marginTop="30dp"
+                android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:textSize="13dp"
                 android:textColor="@color/white"
                 android:background="@drawable/roundshape"
                 android:backgroundTint="@color/black"
                 android:text="추가"/>
+
 
             <TextView
                 android:id="@+id/timeTextList"
@@ -334,14 +336,14 @@
                 android:layout_marginLeft="23dp"
                 android:layout_below="@+id/hourEdit1"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <ListView
+                android:id="@+id/listView3"
                 android:layout_width="320dp"
-                android:layout_height="30dp"
+                android:layout_height="140dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:scrollbars="vertical"
                 android:layout_centerHorizontal="true"
+                android:scrollbars="none"
                 android:background="@drawable/border"
                 android:layout_below="@+id/timeTextList"/>
 
@@ -360,12 +362,12 @@
                 android:id="@+id/workAreaText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="자격증 (최대 5개)"
+                android:text="자격증 (최대 7개)"
                 android:textStyle="bold"
                 android:textSize="15dp"
                 android:layout_marginLeft="22dp"
                 android:layout_marginTop="20dp"
-                android:layout_below="@+id/recyclerView"/>
+                android:layout_below="@+id/listView3"/>
 
             <EditText
                 android:id="@+id/workAreaEdit"
@@ -393,9 +395,10 @@
             <ListView
                 android:id="@+id/listView"
                 android:layout_width="320dp"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:scrollbars="none"
                 android:background="@drawable/border"
                 android:layout_below="@+id/workAddBtn"/>
 
@@ -403,7 +406,7 @@
                 android:id="@+id/prizeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="수상 경력 (최대 5개)"
+                android:text="수상 경력 (최대 7개)"
                 android:textSize="15dp"
                 android:textStyle="bold"
                 android:layout_below="@+id/listView"
@@ -436,8 +439,9 @@
             <ListView
                 android:id="@+id/listView2"
                 android:layout_width="320dp"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:layout_marginTop="10dp"
+                android:scrollbars="none"
                 android:layout_below="@+id/prizeAddBtn"
                 android:background="@drawable/border"
                 android:layout_centerHorizontal="true"/>

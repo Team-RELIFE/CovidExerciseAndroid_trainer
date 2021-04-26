@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CalendarActivity">
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/calendarTitle"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/border"
+        android:hint="제목 입력"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/calendarView"/>
+
+    <EditText
+        android:id="@+id/calendarContent"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/calendarTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/border"
+        android:gravity="start"
+        android:hint="내용 입력"/>
+
+    <Button
+        android:id="@+id/timeselectBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@+id/calendarContent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/roundshape"
+        android:backgroundTint="#54BFEF"
+        android:textColor="@color/white"
+        android:text="시간 선택"/>
+
+    <Button
+        android:id="@+id/scheduleAddBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@+id/timeselectBtn"
+        android:layout_below="@+id/calendarContent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="추가"
+        android:textColor="@color/white"
+        android:background="@drawable/roundshape"/>
+
+
+    <ListView
+        android:id="@+id/calendarList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeselectBtn"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"/>
+
+
+
+</RelativeLayout>

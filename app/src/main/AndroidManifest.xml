@@ -12,17 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="com.example.exercise_android_trainer.SplashActivity">
+        <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.exercise_android_trainer.MainActivity2" />
-        <activity android:name="com.example.exercise_android_trainer.JoinActivity2" />
-        <activity android:name="com.example.exercise_android_trainer.MainActivity">
-        </activity>
+        <activity android:name=".MainActivity2" />
+        <activity android:name=".JoinActivity2" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

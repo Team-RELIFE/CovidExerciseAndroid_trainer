@@ -16,7 +16,7 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arrayList.size(); /*리스트 크기 리턴*/
+        return arrayList.size();
     }
 
     @Override
@@ -46,5 +46,8 @@ public class ListAdapter extends BaseAdapter {
 
     public void addItem(ListviewData data){
         arrayList.add(data);
+    }
+    public void removeItem(int position){
+        arrayList.remove(position);
     }
 }
