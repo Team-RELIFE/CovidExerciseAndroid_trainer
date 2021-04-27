@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -19,6 +21,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.nhn.android.naverlogin.OAuthLogin;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity2 extends AppCompatActivity {
 
     ImageButton menuIcon; /*메뉴버튼*/
@@ -27,12 +32,14 @@ public class MainActivity2 extends AppCompatActivity {
     NavigationView navigationView; /*내비게이션뷰*/
     OAuthLogin mOAuthLogin;
     Context nContext;
+    @BindView(R.id.pt_list_Btn) Button ptListBtn;    //TODO : PT list 버튼 -> 리스트 만들어 연동하기 (우선 PT 화면으로 바로 이동)
     private long time=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        ButterKnife.bind(this);
 
         menuIcon=(ImageButton)findViewById(R.id.menuIcon);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
@@ -76,6 +83,15 @@ public class MainActivity2 extends AppCompatActivity {
                 return false;
             }
         });
+
+        ptListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity2.this, SessionActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     /*뒤로가기 버튼 두 번 누르면 앱 종료*/
