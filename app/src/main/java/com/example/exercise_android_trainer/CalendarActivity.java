@@ -32,6 +32,7 @@ public class CalendarActivity extends AppCompatActivity {
     final static String dbName="calendar.db";
     final static int dbVersion=2;
 
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
