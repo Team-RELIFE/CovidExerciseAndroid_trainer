@@ -10,8 +10,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ListAdapter4 extends BaseAdapter {
+
     ArrayList<ListViewData4> arrayList=new ArrayList<>();
     Context context;
+
     @Override
     public int getCount() {
         return arrayList.size();
@@ -36,10 +38,13 @@ public class ListAdapter4 extends BaseAdapter {
             LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView=inflater.inflate(R.layout.item4,parent,false);
         }
+
         TextView textView1=convertView.findViewById(R.id.scheduleTitle);
         TextView textView2=convertView.findViewById(R.id.scheduleContent);
+        TextView textView3=convertView.findViewById(R.id.timeContent);
         textView1.setText(listViewData4.getT1());
         textView2.setText(listViewData4.getT2());
+        textView3.setText(listViewData4.getT3());
         return convertView;
     }
 

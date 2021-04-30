@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CalendarActivity">
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/mCalendarView"
         android:layout_height="wrap_content"
+        android:layout_width="350dp"
         android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/border"
+        app:mcv_selectionColor="#93D6F4"/>
+
+    <TextView
+        android:id="@+id/scheduleText"
+        android:layout_width="350dp"
+        android:layout_height="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="#93D6F4"
+        android:text="일정 추가"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_below="@+id/mCalendarView"/>
 
     <EditText
         android:id="@+id/calendarTitle"
@@ -19,9 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/border"
-        android:hint="제목 입력"
+        android:hint="제목"
+        android:textSize="15dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/calendarView"/>
+        android:layout_below="@+id/scheduleText"/>
 
     <EditText
         android:id="@+id/calendarContent"
@@ -30,44 +45,87 @@
         android:layout_below="@+id/calendarTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:textSize="15dp"
         android:background="@drawable/border"
         android:gravity="start"
-        android:hint="내용 입력"/>
+        android:hint="내용"/>
+
+    <ImageView
+        android:id="@+id/clockImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/calendarContent"
+        android:layout_toLeftOf="@+id/alarmText"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/clocks"/>
+
+    <TextView
+        android:id="@+id/alarmText"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/calendarContent"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:background="@drawable/border"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:layout_marginRight="25dp"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/timeselectBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_below="@+id/calendarContent"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/clockImage"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/roundshape"
-        android:backgroundTint="#54BFEF"
-        android:textColor="@color/white"
+        android:backgroundTint="@color/white"
+        android:textColor="#54BFEF"
         android:text="시간 선택"/>
 
     <Button
         android:id="@+id/scheduleAddBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_toRightOf="@+id/timeselectBtn"
-        android:layout_below="@+id/calendarContent"
-        android:layout_marginTop="10dp"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/clockImage"
         android:layout_marginLeft="10dp"
-        android:text="추가"
-        android:textColor="@color/white"
-        android:background="@drawable/roundshape"/>
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/timeselectBtn"
+        android:background="@drawable/roundshape"
+        android:backgroundTint="@color/white"
+        android:text="저장"
+        android:textColor="#54BFEF" />
+
+    <TextView
+        android:id="@+id/scheListText"
+        android:layout_width="340dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/scheduleAddBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/border"
+        android:backgroundTint="#93D6F4"
+        android:gravity="center"
+        android:text="목록"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/diaryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/scheListText"/>
 
 
     <ListView
         android:id="@+id/calendarList"
-        android:layout_width="wrap_content"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/timeselectBtn"
+        android:layout_below="@+id/diaryTextView"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"/>
-
-
 
 </RelativeLayout>
