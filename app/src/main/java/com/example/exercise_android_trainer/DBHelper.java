@@ -11,19 +11,27 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TITLE="Title";
     public static final String CONTENT="Content";
     public static final String ALARM="Alarm";
+    public static String month;
+    public static String day;
 
-    public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version,String month,String day) {
         super(context, name, factory, version);
+        this.month=month;
+        this.day=day;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String tableName=month+day;
+        String schedule="schedule";
+        /*테이블 이름 설정 방법*/
         /*데이터 삽입*/
-        String sql="CREATE TABLE if not exists calendarContents2("
-                + "_id integer primary key autoincrement,"
-                + TITLE+" TEXT,"
-                + CONTENT+ " TEXT,"
-                +ALARM+" TEXT);";
+        String sql="CREATE TABLE if not exists"+" "+"schedule"+tableName+"("+TITLE+" TEXT,"+CONTENT+" TEXT,"+ALARM+" TEXT);";
+//        String sql="CREATE TABLE if not exists tableName("
+//                + "_id integer primary key autoincrement,"
+//                + TITLE+" TEXT,"
+//                + CONTENT+ " TEXT,"
+//                +ALARM+" TEXT);";
         db.execSQL(sql); /*sql문 실행*/
     }
 

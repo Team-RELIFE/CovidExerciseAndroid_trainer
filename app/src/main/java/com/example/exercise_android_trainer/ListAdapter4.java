@@ -54,4 +54,7 @@ public class ListAdapter4 extends BaseAdapter {
     public void removeData(ListViewData4 data4){
         arrayList.remove(data4);
     }
+    public void clearItem() {
+        arrayList.clear();
+    }
 }

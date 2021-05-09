@@ -8,8 +8,8 @@
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/mCalendarView"
-        android:layout_height="wrap_content"
-        android:layout_width="350dp"
+        android:layout_height="320dp"
+        android:layout_width="320dp"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/border"
@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/scheduleText"
-        android:layout_width="350dp"
+        android:layout_width="320dp"
         android:layout_height="25dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
@@ -27,21 +27,80 @@
         android:gravity="center"
         android:layout_below="@+id/mCalendarView"/>
 
+    <TextView
+        android:id="@+id/_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scheduleText"
+        android:layout_centerHorizontal="true"
+        android:textColor="#93D6F4"
+        android:text="--------------------------------------------------------------------------------------"/>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_text1"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/monthText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0776A8"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/monthText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/monthText1"
+            android:text="월"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/dateText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/monthText2"
+            android:layout_marginLeft="10dp"
+            android:textColor="#0776A8"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/dateText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/dateText1"
+            android:text="일"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_centerHorizontal="true"
+        android:textColor="#93D6F4"
+        android:text="--------------------------------------------------------------------------------------"/>
+
     <EditText
         android:id="@+id/calendarTitle"
-        android:layout_width="350dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/border"
         android:hint="제목"
         android:textSize="15dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/scheduleText"/>
+        android:layout_below="@+id/_text2"/>
 
     <EditText
         android:id="@+id/calendarContent"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/calendarTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
@@ -50,82 +109,111 @@
         android:gravity="start"
         android:hint="내용"/>
 
-    <ImageView
-        android:id="@+id/clockImage"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+    <Button
+        android:id="@+id/timeselectBtn"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
         android:layout_below="@+id/calendarContent"
-        android:layout_toLeftOf="@+id/alarmText"
-        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/timeText2"
         android:layout_marginTop="10dp"
-        android:src="@drawable/clocks"/>
+        android:background="#00FFFFFF"
+        android:textColor="#93D6F4"
+        android:text="시간 선택"/>
+
+    <TextView
+        android:id="@+id/timeText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/calendarContent"
+        android:text="|"
+        android:textColor="#93D6F4"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/alarmText"
-        android:layout_width="70dp"
+        android:layout_width="160dp"
         android:layout_height="30dp"
         android:layout_below="@+id/calendarContent"
-        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/timeText2"
         android:gravity="center"
-        android:background="@drawable/border"
         android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:layout_marginRight="25dp"
-        android:textSize="20dp" />
-
-    <Button
-        android:id="@+id/timeselectBtn"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/clockImage"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/roundshape"
-        android:backgroundTint="@color/white"
-        android:textColor="#54BFEF"
-        android:text="시간 선택"/>
-
-    <Button
-        android:id="@+id/scheduleAddBtn"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/clockImage"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/timeselectBtn"
-        android:background="@drawable/roundshape"
-        android:backgroundTint="@color/white"
-        android:text="저장"
-        android:textColor="#54BFEF" />
+        android:textSize="15dp" />
 
     <TextView
-        android:id="@+id/scheListText"
-        android:layout_width="340dp"
-        android:layout_height="25dp"
-        android:layout_below="@+id/scheduleAddBtn"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/alarmMode"
+        android:layout_width="90dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/timeselectBtn"
         android:layout_marginTop="10dp"
-        android:background="@drawable/border"
-        android:backgroundTint="#93D6F4"
-        android:gravity="center"
-        android:text="목록"
-        android:textColor="@color/white" />
+        android:layout_toLeftOf="@+id/alarmText2"
+        android:text="알람"
+        android:textColor="#93D6F4"/>
 
     <TextView
-        android:id="@+id/diaryTextView"
+        android:id="@+id/alarmText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/scheListText"/>
+        android:layout_centerInParent="true"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/timeText2"
+        android:text="|"
+        android:textColor="#93D6F4"
+        android:textStyle="bold"/>
 
-
-    <ListView
-        android:id="@+id/calendarList"
-        android:layout_width="340dp"
+    <CheckBox
+        android:id="@+id/alarmOnCheck"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/diaryTextView"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/alarmText"
+        android:layout_toRightOf="@+id/alarmText2"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="30dp"
+        android:text="ON"
+        android:textSize="13dp"
+        android:buttonTint="#93D6F4"/>
+
+    <CheckBox
+        android:id="@+id/alarmOffCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarmText"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/alarmOnCheck"
+        android:layout_marginLeft="5dp"
+        android:text="OFF"
+        android:textSize="13dp"
+        android:buttonTint="#93D6F4"/>
+
+    <RelativeLayout
+        android:id="@+id/calendarRelative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarmMode"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:id="@+id/listOpen"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:fitsSystemWindows="true"
+            android:background="#00FFFFFF"
+            android:layout_toRightOf="@+id/scheduleSaveBtn"
+            android:layout_marginLeft="80dp"
+            android:src="@drawable/checklist" />
+
+        <ImageButton
+            android:id="@+id/scheduleSaveBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:fitsSystemWindows="true"
+            android:background="#00FFFFFF"
+            android:src="@drawable/floppydisk"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
