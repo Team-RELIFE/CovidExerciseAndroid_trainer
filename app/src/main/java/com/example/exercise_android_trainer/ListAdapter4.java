@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -42,9 +43,11 @@ public class ListAdapter4 extends BaseAdapter {
         TextView textView1=convertView.findViewById(R.id.scheduleTitle);
         TextView textView2=convertView.findViewById(R.id.scheduleContent);
         TextView textView3=convertView.findViewById(R.id.timeContent);
+        ImageView imageView=convertView.findViewById(R.id.alarmImage);
         textView1.setText(listViewData4.getT1());
         textView2.setText(listViewData4.getT2());
         textView3.setText(listViewData4.getT3());
+        imageView.setImageDrawable(listViewData4.getDrawable());
         return convertView;
     }
 

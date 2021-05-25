@@ -30,6 +30,13 @@
         <activity android:name=".JoinActivity2" />
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".SessionActivity" />
+        <receiver android:name=".AlarmReceiver">
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
