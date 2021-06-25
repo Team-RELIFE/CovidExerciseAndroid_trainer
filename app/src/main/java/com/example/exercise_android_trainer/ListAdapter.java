@@ -1,5 +1,5 @@
 package com.example.exercise_android_trainer;
-
+//주석 jimoon
 import android.app.LauncherActivity;
 import android.content.Context;
 import android.view.LayoutInflater;
