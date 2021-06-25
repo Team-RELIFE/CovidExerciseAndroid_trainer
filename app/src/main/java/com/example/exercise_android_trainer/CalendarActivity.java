@@ -65,6 +65,7 @@ public class CalendarActivity extends AppCompatActivity {
     CalendarDay datee;
     String sHour,sMinute,sSecond; /*알람용 문자열 변수*/
     String title2;
+    /*minji_push*/
 
     final static String dbName="calendar3.db"; /*db이름*/
     final static int dbVersion=1; /*db 버전*/
