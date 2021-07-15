@@ -4,9 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -33,9 +31,13 @@
         <activity android:name=".JoinActivity2" />
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".SessionActivity" />
+        <service android:name=".MyService">
+            android:enabled="true"
+            android:exported="true"
+        </service>
         <receiver android:name=".AlarmReceiver">
             android:enabled="true"
-            android:exported="false">
+            android:exported="true"
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

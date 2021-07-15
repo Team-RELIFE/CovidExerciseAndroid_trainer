@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         naverBtn=(OAuthLoginButton)findViewById(R.id.naverLogin);
         naverBtn.setOAuthLoginHandler(mOAuthLoginHandler); /*핸들러*/
     }
-//깃 푸쉬 나현
+
     private OAuthLoginHandler mOAuthLoginHandler=new OAuthLoginHandler() {
         @Override
         public void run(boolean success) {

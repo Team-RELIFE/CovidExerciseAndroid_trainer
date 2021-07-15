@@ -11,9 +11,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -32,6 +36,7 @@ public class MainActivity2 extends AppCompatActivity {
     NavigationView navigationView; /*내비게이션뷰*/
     OAuthLogin mOAuthLogin;
     Context nContext;
+    TextView mainText1;
     @BindView(R.id.pt_list_Btn) Button ptListBtn;    //TODO : PT list 버튼 -> 리스트 만들어 연동하기 (우선 PT 화면으로 바로 이동)
     private long time=0;
 
@@ -46,11 +51,17 @@ public class MainActivity2 extends AppCompatActivity {
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView=(NavigationView)findViewById(R.id.navi_view);
         nContext=this;
+        mainText1=(TextView)findViewById(R.id.main2_Text1);
 
         /*액션바 대신 툴바 사용*/
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); /*앱 타이틀 안보이게*/
         //getActionBar사용시 오류//
+
+
+        Animation animation= new AlphaAnimation(0.0f,1.0f);
+        animation.setDuration(2000);
+        mainText1.startAnimation(animation);
 
         /*메뉴버튼 눌렀을 때 내비게이션 드로어 오픈*/
         menuIcon.setOnClickListener(new View.OnClickListener() {

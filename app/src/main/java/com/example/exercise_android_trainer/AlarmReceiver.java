@@ -9,16 +9,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+
+import java.util.ArrayList;
 
 //리시버 manifest에 등록하기!!
 //android:exported 속성을 false로 설정하면 리시버가 내 앱으로부터 전달되는 인텐트만 받음
-public class AlarmReceiver extends BroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver{
 
     String alarm_title=((CalendarActivity)CalendarActivity.contextCalendar).title;
-    ///일정 스와이프 및 일정,알람 삭제 기능 구현
-    public AlarmReceiver(){ }
+
+    public AlarmReceiver(){}
 
     NotificationManager manager;
     NotificationCompat.Builder builder;
@@ -28,9 +32,10 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static String CHANNEL_NAME="Channel1";
 
     //intent를 받으면 Notification 띄움
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
-        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        //AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         builder=null;
         manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
@@ -38,23 +43,23 @@ public class AlarmReceiver extends BroadcastReceiver {
                     new NotificationChannel(CHANNEL_ID,CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT)
             );
             builder=new NotificationCompat.Builder(context, CHANNEL_ID);
+
         }else {
             builder=new NotificationCompat.Builder(context);
         }
-        //알림창 클릭 시 액티비티 화면 부름
-        Intent intent2=new Intent(context,MainActivity.class);
-        PendingIntent pendingIntent=PendingIntent.getActivity(context,101,intent2,PendingIntent.FLAG_UPDATE_CURRENT); //Activity를 시작하는 인텐트 생성
 
-        //알림창 제목
-        builder.setContentTitle(alarm_title);
-        //builder.setContentTitle("확 찐자 운동관리");
-        //알림창 아이콘
+        Intent intent2=new Intent(context, MyService.class);
+        int requestCode2=intent.getExtras().getInt("requestCode");
+
+        Log.w("AlarmReceiver is Called", String.valueOf(requestCode2));
+        PendingIntent pendingIntent=PendingIntent.getActivity(context,requestCode2,intent2,PendingIntent.FLAG_UPDATE_CURRENT); //Activity를 시작하는 인텐트 생성
+
+        builder.setContentTitle(alarm_title); //알림창 제목
         builder.setSmallIcon(R.drawable.clocks);
-        //알림창 터치 시 자동 삭제
-        builder.setAutoCancel(true);
-
+        builder.setAutoCancel(true); //알림창 터치시 자동 삭제
         builder.setContentIntent(pendingIntent);
         Notification notification=builder.build(); //Notification 객체 생성
         manager.notify(1,notification); //NotificationManager에게 알림 요청
+
     }
 }

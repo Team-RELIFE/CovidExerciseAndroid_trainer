@@ -3,6 +3,7 @@ package com.example.exercise_android_trainer;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -42,4 +43,18 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         onCreate(db);
     }
+
+    public void deleteDBcontent(SQLiteDatabase db, String i){
+        String tableName="schedule"+month+day;
+        //db.delete("schedule"+month+day,"Title=?",new String[]{i});
+        String sql="DELETE FROM " + "schedule" + month + day + " WHERE Title=" + "'" + i + "'" + ";";
+        System.out.println(sql);
+        //String sql2="DELETE FROM schedule72 WHERE Title='ppt';";
+        //"DELETE FROM schedule72 WHERE Title=라라랄;"
+        //String sql="DELETE FROM " + "schedule" + month + day + " WHERE Title=" + "'??'" + ";"; - ok
+        db.execSQL(sql);
+        Log.w("TAG","Table row delete execute");
+        //db.delete("schedule"+month+day, "Title=" + i,null);
+    }
+
 }

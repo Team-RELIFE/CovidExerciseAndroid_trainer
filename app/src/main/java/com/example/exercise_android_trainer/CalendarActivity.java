@@ -1,12 +1,16 @@
 package com.example.exercise_android_trainer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -15,16 +19,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Canvas;
 import android.graphics.Color;
-import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,18 +39,17 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
 
     public static Context contextCalendar;
+
     /*아무것도 저장 안했을 때 목록 누르면 오류*/
     /*초기 날짜에 저장하면 테이블 이름이 nullnull로 되는 오류*/
     EditText titleText,contentText; /*제목, 내용 입력*/
@@ -60,32 +61,37 @@ public class CalendarActivity extends AppCompatActivity {
     SQLiteDatabase db; /*SQLiteDatabase*/
     TextView alarmText,monthText,dateText; /*선택한 시간 정보를
     텍스트로 입력받을 textView*/
-    String title,content,time,sYear,sMonth,sDay;
+    public String title,setUpAlarmString;
+    public int requestCode1;
+    String content,time,sYear,sMonth,sDay;
     String schedule="schedule";
     CalendarDay datee;
-    String sHour,sMinute,sSecond; /*알람용 문자열 변수*/
+    String sHour,sMinute,alarm; /*알람용 문자열 변수*/
     String title2;
-    /*minji_push*/
+
+    //추가 - 일정목록 다이얼로그 리스트뷰 -> 리사이클러뷰+카드뷰로 수정, 스와이프하여 삭제 수정 버튼 추가//
+    RecyclerView.LayoutManager manager;
+    RecyclerAdapter recyclerAdapter;
+    RecyclerView recyclerView;
+    //swipeController controller;
+    ItemTouchHelper itemTouchHelper;
 
     final static String dbName="calendar3.db"; /*db이름*/
     final static int dbVersion=1; /*db 버전*/
-
-    /*추가한 데이터를 리스트 형태로 보여주기 위한 리스트뷰와 어댑터*/
-    ListAdapter4 listAdapter4;
-    ListView listView;
 
     /*알람 설정 관련 변수*/
     private AlarmManager alarmManager;
     private GregorianCalendar mCalendar; //윤년에 대해 파악 가능한 달력 클래스
 
-    private NotificationManager notificationManager; //알림(Notification)을 관리하는 관리자
-    NotificationCompat.Builder builder; //Notification 객체 생성
+    NotificationManager notificationManager; //알림(Notification)을 관리하는 관리자
+    NotificationCompat.Builder notificationBuilder; //Notification 객체 생성
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         notificationManager=(NotificationManager)getSystemService(NOTIFICATION_SERVICE); //NotificationManager를 운영체제로부터 호출
+        notificationBuilder=null;
         alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE); //AlarmManager를 운영체제로부터 호출
         mCalendar=new GregorianCalendar(); //캘린더 객체 생성
         setContentView(R.layout.activity_calendar);
@@ -101,8 +107,6 @@ public class CalendarActivity extends AppCompatActivity {
         alarmText=(TextView)findViewById(R.id.alarmText);
         monthText=(TextView)findViewById(R.id.monthText1);
         dateText=(TextView)findViewById(R.id.dateText1);
-        listAdapter4=new ListAdapter4();
-        listView=(ListView)findViewById(R.id.listview_alterdialog_list);
 
         calendarView.setSelectedDate(CalendarDay.today()); /*달력의 오늘 날짜부터 시작하도록*/
         /*오늘 날짜를 월/일로 텍스트뷰에 출력*/
@@ -138,6 +142,7 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
         scheduleAddBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
@@ -153,16 +158,24 @@ public class CalendarActivity extends AppCompatActivity {
                     Toast.makeText(CalendarActivity.this,"제목 또는 내용을 입력해주세요.",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    ContentValues values=new ContentValues();
-                    values.put("Title",title);
-                    values.put("Content",content);
-                    values.put("Alarm",time);
-                    db.insert(schedule+sMonth+sDay,null,values); /*db에 저장*/
-                    if (alarmOnCheck.isChecked()){ /*On에 체크가 되어있으면*/
+                    if (alarmOnCheck.isChecked() && !time.isEmpty()) { /*On에 체크가 되어있고, 시간이 설정되어 있다면*/
+                        ContentValues values=new ContentValues();
+                        values.put("Title",title);
+                        values.put("Content",content);
+                        values.put("Alarm",time);
+                        db.insert(schedule+sMonth+sDay,null,values); /*db에 저장*/
                         setAlarm(); /*setAlarm 함수 호출*/
+                        Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
+                    }else if(!alarmOnCheck.isChecked()){ //Off에 체크가 되어있다면 제목하고 내용만 저장
+                        ContentValues values=new ContentValues();
+                        values.put("Title",title);
+                        values.put("Content",content);
+                        db.insert(schedule+sMonth+sDay,null,values); /*db에 저장*/
+                        Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
+                    }else { //On에 체크가 되어 있는데 시간이 설정되어 있지 않다면
+                        Toast.makeText(CalendarActivity.this,"알람 시간을 입력해주세요.",Toast.LENGTH_SHORT).show(); //에러메세지 출력
                     }
-                    calendarView.addDecorator(new EventDecorator(Color.BLUE,Collections.singleton(datee))); /*DotSpan 찍기*/
-                    Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
+                    //calendarView.addDecorator(new EventDecorator(Color.BLUE,Collections.singleton(datee))); /*DotSpan 찍기*/
                 }
             }
         });
@@ -173,7 +186,6 @@ public class CalendarActivity extends AppCompatActivity {
                final Calendar c=Calendar.getInstance();
                int mhour=c.get(Calendar.HOUR);
                int mMinute=c.get(Calendar.MINUTE);
-               int mSecond=c.get(Calendar.SECOND);
 
                TimePickerDialog timePickerDialog=new TimePickerDialog(CalendarActivity.this, R.style.themeOnverlay_timePicker, new TimePickerDialog.OnTimeSetListener() {
                    @Override
@@ -181,7 +193,7 @@ public class CalendarActivity extends AppCompatActivity {
                        sHour=Integer.toString(hourOfDay);
                        sMinute=Integer.toString(minute);
                        alarmText.setText(hourOfDay+":"+minute);
-                       System.out.println(sMinute);
+                       alarm=sHour+sMinute;
                    }
                },mhour,mMinute,false);
                timePickerDialog.show();
@@ -210,42 +222,47 @@ public class CalendarActivity extends AppCompatActivity {
 
         dbHelper=new DBHelper(CalendarActivity.this,dbName,null,dbVersion,sMonth,sDay);
         db=dbHelper.getReadableDatabase(); /*읽기 모드*/
-        dbHelper.onCreate(db);
+        dbHelper.onCreate(db); //db 생성
 
         Cursor c=db.rawQuery("SELECT * FROM"+" "+tableName,null);
 
         try {
             if (c!=null){
-                final ListView listView=(ListView)view.findViewById(R.id.listview_alterdialog_list);
-                if (listAdapter4.getCount()!=0)
-                    listAdapter4.clearItem();
-                if(c.moveToFirst()){
+                recyclerView=(RecyclerView)view.findViewById(R.id.listview_alterdialog_list); //추가
+                manager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+                recyclerView.setLayoutManager(manager);
+                recyclerAdapter=new RecyclerAdapter(contextCalendar,sMonth,sDay,alarm); //수정, db 내 테이블 삭제를 위해 테이블명도 전달 알람!!
+                if(c.moveToFirst()){ //핸드폰 내부 저장소로부터 해당 테이블 명으로 테이블 내의 데이터(제목, 내용, 알람시간) 끌어오기
                     do {
                         title2=c.getString(c.getColumnIndex("Title"));
-                        //String title2=c.getString(c.getColumnIndex("Title"));
                         String content2=c.getString(c.getColumnIndex("Content"));
                         String alarm2 = c.getString(c.getColumnIndex("Alarm"));
-                        listAdapter4.addItem(new ListViewData4(title2,content2,alarm2, ContextCompat.getDrawable(this,R.drawable.clocks)));
-                        listView.setAdapter(listAdapter4);
-                        listAdapter4.notifyDataSetChanged();
-                    }while (c.moveToNext());
+                        recyclerAdapter.addItem(new ListViewData4(title2,content2,alarm2)); //어댑터에 생성한 ListViewData4 객체 저장하고
+                        recyclerView.setAdapter(recyclerAdapter); //리사이클러뷰에 어댑터 연결
+                    }while (c.moveToNext()); //삭제&수정 스와이프 기능
+                    itemTouchHelper=new ItemTouchHelper(new swipeController(recyclerAdapter)); //어댑터 객체를 전달해서 ItemTouchHelper객체 생성한 다음
+                    itemTouchHelper.attachToRecyclerView(recyclerView); //ItemTouchHelper 객체를 리사이클러뷰에 부착
                 }
             }
         }catch (Exception e){
-            Log.w("TAG","no such table",e);
+            Log.w("TAG","no such table",e); //테이블이 존재하지 않으면 로그 메세지 출력
         }
-
         alertDialog.setCancelable(false);
         alertDialog.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void setAlarm(){ /*알람 생성*/
-        //AlarmReceiver에 값 전달
         Intent receiverIntent=new Intent(CalendarActivity.this, AlarmReceiver.class); //리시버로 전달될 인텐트 설정
-        //PendingIntent : 인텐트를 특정 시점에 실행시킬 수 있음
-        PendingIntent pendingIntent=PendingIntent.getBroadcast(CalendarActivity.this,0,receiverIntent,0); //BroadcastReceiver를 시작하는 인텐트 생성
+
+        setUpAlarmString=sMonth+sDay+sHour+sMinute+"00"; /*추가, requestCode를 날짜+시간으로 수정*/
+        requestCode1=Integer.parseInt(setUpAlarmString); //요청코드를 정수로 변환
+        receiverIntent.putExtra("requestCode",requestCode1); //요청 코드를 리시버에 전달
+
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(CalendarActivity.this,requestCode1,receiverIntent,PendingIntent.FLAG_UPDATE_CURRENT); /*getBroadcast(fromContext,customRequestcode,toIntent,flag)*/
+        Log.w("InCalendarActivity_RC", String.valueOf(requestCode1));
+
         String from=sYear+"-"+sMonth+"-"+sDay+" "+sHour+":"+sMinute+":"+"00"; /*알람으로 설정한 날짜*/
-        System.out.println(from); /*알람으로 설정한 날짜와 시간이 잘 출력되는지 확인해보기 위한 텍스트*/
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
         Date datetime=new Date();
         try {
@@ -255,8 +272,18 @@ public class CalendarActivity extends AppCompatActivity {
         }
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(datetime);
-        alarmManager.set(AlarmManager.RTC,calendar.getTimeInMillis(),pendingIntent);
-        //RTC : 지정된 시간에 대기중인 인텐트를 실행하지만 기기의 절전모드는 해제하지 않음
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+        //alarmManager.set(AlarmManager.RTC,calendar.getTimeInMillis(),pendingIntent); //set은 API 레벨 23부터 도즈모드에서 실행 X
     }
+
+    private void setUpRecyclerView(){
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                itemTouchHelper.onDraw(c, parent, state);
+            }
+        });
+    }
+
 }
 

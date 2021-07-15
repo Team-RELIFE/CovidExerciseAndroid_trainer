@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/scheduleTitle"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold"/>
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/scheduleContent"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/scheduleTitle"
-        android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/alarmImage"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="3dp"
-        android:layout_below="@+id/scheduleContent"
-        android:layout_marginLeft="10dp"
-        android:scaleType="fitCenter"
-        android:background="#00FFFFFF"/>
+            <TextView
+                android:id="@+id/scheduleTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/timeContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/alarmImage"
-        android:layout_below="@+id/scheduleContent"/>
+            <TextView
+                android:id="@+id/scheduleContent"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/scheduleTitle"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/timeContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/scheduleContent"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

@@ -14,7 +14,6 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:background="#54BFEF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -23,13 +22,12 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:src="@drawable/ic_stat_menu"
-               android:background="#00ff0000"/>
+               android:backgroundTint="#54BFEF" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="확 찐자 운동관리"
-                android:textColor="@color/white"
+                android:textColor="#54BFEF"
                 android:layout_marginLeft="30dp"/>
 
         </androidx.appcompat.widget.Toolbar>
@@ -38,45 +36,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/video_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/videocall" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/video_image"
-            android:text="PT"
-            android:textColor="#54BFEF"
-            android:textSize="36dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:id="@+id/main2_Text1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/video_image"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="10dp"
-            android:text="하러가기"
-            android:textColor="#54BFEF"
-            android:textSize="30dp"/>
-
-        <ImageButton
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_below="@+id/main2_Text1"
-            android:layout_toRightOf="@+id/video_image"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="35dp"
-            android:src="@drawable/phonecall"
-            android:background="#00ff0000"
-            android:scaleType="fitCenter"/>
+        android:layout_marginTop="70dp">
 
         <TextView
             android:id="@+id/main2_Text2"
@@ -84,26 +44,31 @@
             android:layout_height="wrap_content"
             android:text="더 많은 수강생들을 만나고 싶다면?"
             android:textColor="#54BFEF"
-            android:textSize="15dp"
-            android:layout_marginTop="80dp"
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/video_image"/>
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/pt_list_Btn"
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_below="@+id/main2_Text2"
-            android:layout_marginTop="15dp"
-            android:layout_centerInParent="true"
             android:backgroundTint="#54BFEF"
             android:textColor="@color/white"
             android:text="홍보하러 가기"
             android:textStyle="bold"
             android:textSize="20dp"/>
 
+        <TextView
+            android:id="@+id/main2_Text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello,"
+            android:textSize="20dp"
+            android:layout_marginTop="150dp"
+            android:textStyle="bold"/>
+
 
     </RelativeLayout>
+
 
     <include layout="@layout/drawer"/>
 
