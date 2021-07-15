@@ -17,7 +17,7 @@ import androidx.core.app.NotificationCompat;
 public class AlarmReceiver extends BroadcastReceiver {
 
     String alarm_title=((CalendarActivity)CalendarActivity.contextCalendar).title;
-
+    ///일정 스와이프 및 일정,알람 삭제 기능 구현
     public AlarmReceiver(){ }
 
     NotificationManager manager;
