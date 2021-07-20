@@ -162,29 +162,31 @@
         android:textColor="#93D6F4"
         android:textStyle="bold"/>
 
-    <CheckBox
-        android:id="@+id/alarmOnCheck"
+    <RadioGroup
+        android:id="@+id/alarmGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/alarmText"
-        android:layout_toRightOf="@+id/alarmText2"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="30dp"
-        android:text="ON"
-        android:textSize="13dp"
-        android:buttonTint="#93D6F4"/>
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@id/alarmText2"
+        android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/alarmOffCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/alarmText"
-        android:layout_marginTop="8dp"
-        android:layout_toRightOf="@+id/alarmOnCheck"
-        android:layout_marginLeft="5dp"
-        android:text="OFF"
-        android:textSize="13dp"
-        android:buttonTint="#93D6F4"/>
+        <RadioButton
+            android:id="@+id/alarmOnCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#93D6F4"
+            android:text="On"/>
+
+        <RadioButton
+            android:id="@+id/alarmOffCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#93D6F4"
+            android:checked="true"
+            android:text="Off"/>
+
+    </RadioGroup>
 
     <RelativeLayout
         android:id="@+id/calendarRelative"

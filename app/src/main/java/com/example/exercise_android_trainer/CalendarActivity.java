@@ -16,11 +16,13 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.RadialGradient;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,9 +30,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -39,6 +44,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,25 +54,37 @@ import java.util.GregorianCalendar;
 
 public class CalendarActivity extends AppCompatActivity {
 
+    // TODO: 알람 수정 기능 추가, DBHelper 수정
+    // TODO: 2021-07-20 <일정 테스트>
+    // TODO: 1. 일정이 제대로 저장 되는가, 시간을 설정하지 않아도 제대로 저장 되는가 -> ok
+    // TODO: 2. 일정이 제대로 삭제되는가, 일정 수정 시 다이얼로그가 적절하게 호출되는가 -> ok
+    // TODO: 3. 일정 수정 시 제목과 내용, 시간이 제대로 수정되어 db에 반영되는가  -> ok
+    // TODO: 4. 알람 ON 으로 수정 시
+    // TODO:    4.1 기존 알람이 취소되고, 새로 설정한 알람이 제대로 실행되는가 -> ok
+    // TODO:    4.2 기존에 설정한 알람이 없다면 새로 설정한 알람이 제대로 실행되는가 -> ok
+    // TODO: 5. 알람 OFF 로 수정 시
+    // TODO:    5.1 기존에 설정한 알람이 제대로 취소되는가 -> ok
+    // TODO: 6. 앱이 꺼져도 알람이 제대로 실행되는가 -> ok
+
+    // TODO: 2021-07-21 : 알람 실행 시 notification 타이틀이 해당 알람의 제목으로 출력이 안되는 에러 수정
+    // TODO: 2021-07-22 : 일정 저장 시 캘린더에 dotSpan 추가
+
     public static Context contextCalendar;
 
-    /*아무것도 저장 안했을 때 목록 누르면 오류*/
-    /*초기 날짜에 저장하면 테이블 이름이 nullnull로 되는 오류*/
     EditText titleText,contentText; /*제목, 내용 입력*/
     Button timeselectBtn; /*스케줄 추가,시간 선책,일정 보기 버튼*/
     ImageButton listOpenBtn,scheduleAddBtn; /*일정 목록 열기, 일정 저장 이미지 버튼*/
-    CheckBox alarmOnCheck; /*알람 ON 체크박스*/
+    RadioGroup radioGroup1; /*알람 ON/OFF 설정, 수정 라디오그룹*/
     MaterialCalendarView calendarView; /*Material 캘린더뷰*/
     DBHelper dbHelper; /*데이터베이스 테이블 생성/업뎃 클래스*/
     SQLiteDatabase db; /*SQLiteDatabase*/
-    TextView alarmText,monthText,dateText; /*선택한 시간 정보를
-    텍스트로 입력받을 textView*/
+    TextView alarmText,monthText,dateText; /*선택한 시간 정보를 텍스트로 입력받을 textView*/
     public String title,setUpAlarmString;
     public int requestCode1;
     String content,time,sYear,sMonth,sDay;
     String schedule="schedule";
     CalendarDay datee;
-    String sHour,sMinute,alarm; /*알람용 문자열 변수*/
+    String sHour,sMinute,alarm,originHour,originMinute; /*알람용 문자열 변수*/
     String title2;
 
     //추가 - 일정목록 다이얼로그 리스트뷰 -> 리사이클러뷰+카드뷰로 수정, 스와이프하여 삭제 수정 버튼 추가//
@@ -86,6 +104,8 @@ public class CalendarActivity extends AppCompatActivity {
     NotificationManager notificationManager; //알림(Notification)을 관리하는 관리자
     NotificationCompat.Builder notificationBuilder; //Notification 객체 생성
 
+    AlertDialog scheduleListDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +122,7 @@ public class CalendarActivity extends AppCompatActivity {
         timeselectBtn=(Button)findViewById(R.id.timeselectBtn);
         listOpenBtn=(ImageButton)findViewById(R.id.listOpen);
         scheduleAddBtn=(ImageButton) findViewById(R.id.scheduleSaveBtn);
-        alarmOnCheck=(CheckBox)findViewById(R.id.alarmOnCheck);
+        radioGroup1=(RadioGroup)findViewById(R.id.alarmGroup); //0718 수정 -> 체크박스 -> 라디오버튼 변경
         calendarView=(MaterialCalendarView) findViewById(R.id.mCalendarView);
         alarmText=(TextView)findViewById(R.id.alarmText);
         monthText=(TextView)findViewById(R.id.monthText1);
@@ -154,26 +174,32 @@ public class CalendarActivity extends AppCompatActivity {
                 content=contentText.getText().toString().trim();
                 time=alarmText.getText().toString().trim();
 
+                int id=radioGroup1.getCheckedRadioButtonId();
+
                 if (title.isEmpty() || content.isEmpty()){
                     Toast.makeText(CalendarActivity.this,"제목 또는 내용을 입력해주세요.",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    if (alarmOnCheck.isChecked() && !time.isEmpty()) { /*On에 체크가 되어있고, 시간이 설정되어 있다면*/
-                        ContentValues values=new ContentValues();
-                        values.put("Title",title);
-                        values.put("Content",content);
-                        values.put("Alarm",time);
-                        db.insert(schedule+sMonth+sDay,null,values); /*db에 저장*/
-                        setAlarm(); /*setAlarm 함수 호출*/
-                        Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
-                    }else if(!alarmOnCheck.isChecked()){ //Off에 체크가 되어있다면 제목하고 내용만 저장
-                        ContentValues values=new ContentValues();
-                        values.put("Title",title);
-                        values.put("Content",content);
-                        db.insert(schedule+sMonth+sDay,null,values); /*db에 저장*/
-                        Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
-                    }else { //On에 체크가 되어 있는데 시간이 설정되어 있지 않다면
-                        Toast.makeText(CalendarActivity.this,"알람 시간을 입력해주세요.",Toast.LENGTH_SHORT).show(); //에러메세지 출력
+                    if(!time.isEmpty()){ //알람 시간을 설정했을 경우
+                        if (id==R.id.alarmOnCheck){ //체크박스 on 선택 시 제목,내용,알람시간 모두 db에 저장
+                            dbHelper.insertDBcontent(db,title,content,time);
+                            setAlarm(); /*setAlarm 함수 호출*/
+                            Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
+                        }
+                        else{ //체크박스 off 선택 시
+                            Toast.makeText(CalendarActivity.this,"On에 체크해주세요.",Toast.LENGTH_SHORT).show();
+                        }
+                    }else{ //알람 시간을 설정하지 않았을 경우
+                        if (id==R.id.alarmOnCheck){
+                            Toast.makeText(CalendarActivity.this,"알람 시간을 설정해주세요.",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            ContentValues values=new ContentValues();
+                            values.put("Title",title);
+                            values.put("Content",content);
+                            db.insert(schedule+sMonth+sDay,null,values); /*db에 저장*/
+                            Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
+                        }
                     }
                     //calendarView.addDecorator(new EventDecorator(Color.BLUE,Collections.singleton(datee))); /*DotSpan 찍기*/
                 }
@@ -218,7 +244,7 @@ public class CalendarActivity extends AppCompatActivity {
         builder.setView(view);
         String tableName=schedule+sMonth+sDay;
 
-        final AlertDialog alertDialog=builder.create();
+        scheduleListDialog=builder.create();
 
         dbHelper=new DBHelper(CalendarActivity.this,dbName,null,dbVersion,sMonth,sDay);
         db=dbHelper.getReadableDatabase(); /*읽기 모드*/
@@ -247,8 +273,8 @@ public class CalendarActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.w("TAG","no such table",e); //테이블이 존재하지 않으면 로그 메세지 출력
         }
-        alertDialog.setCancelable(false);
-        alertDialog.show();
+        scheduleListDialog.setCancelable(false);
+        scheduleListDialog.show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -274,6 +300,95 @@ public class CalendarActivity extends AppCompatActivity {
         calendar.setTime(datetime);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
         //alarmManager.set(AlarmManager.RTC,calendar.getTimeInMillis(),pendingIntent); //set은 API 레벨 23부터 도즈모드에서 실행 X
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void modifyCalendarDialog(String originTitle, String originContent, String originAlarm){
+        //edittext 제목, 내용에는 db에 저장되어 있던 내용이 출력되어야 하고
+        //textview 시간도 원래 db에 저장되어 있던 내용이 출력되어야 함
+        AlertDialog.Builder builder=new AlertDialog.Builder(CalendarActivity.this);
+        LayoutInflater inflater=getLayoutInflater();
+        View view=inflater.inflate(R.layout.modifycalendar,null);
+        builder.setPositiveButton("취소",null);
+        builder.setView(view);
+
+        dbHelper=new DBHelper(CalendarActivity.this,dbName,null,dbVersion,sMonth,sDay);
+        db=dbHelper.getWritableDatabase();
+        String tableName=schedule+sMonth+sDay;
+
+        EditText edt1=(EditText)view.findViewById(R.id.modiEditTitle);
+        EditText edt2=(EditText)view.findViewById(R.id.modiEditContent);
+        edt1.setText(originTitle);
+        edt2.setText(originContent);
+
+        TimePicker timePicker=(TimePicker)view.findViewById(R.id.timePicker);
+
+        if (originAlarm!=null){ //기존의 알람 시간이 설정되어 있다면 기존 시간으로 타임피커 설정
+            stringSplit(originAlarm);
+            timePicker.setHour(Integer.parseInt(originHour));
+            timePicker.setMinute(Integer.parseInt(originMinute));
+        }else{ //설정되어 있지 않다면 현재 시간으로 타임피커 설정, if(originalAlarm==null) ->ok
+            Calendar calendar=Calendar.getInstance();
+            timePicker.setCurrentHour(calendar.get(Calendar.HOUR));
+            timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
+        }
+
+        builder.setNeutralButton("등록", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String title=edt1.getText().toString();
+                String content=edt2.getText().toString();
+                String time;
+                RadioGroup radioGroup2=(RadioGroup)view.findViewById(R.id.modiAlarmGroup);
+                int id=radioGroup2.getCheckedRadioButtonId();
+
+                if (id==R.id.modiAlarmOnCheck){ //수정 시 알람 ON
+                    if (originAlarm!=null){ //기존에 설정했던 알람이 있는 경우
+                        stringSplit(originAlarm);
+                        cancelAlarm(originHour,originMinute); //기존 알람 취소
+                    }
+                    int hour=timePicker.getHour(); //타임피커로부터 시간,분 얻어옴
+                    int minute=timePicker.getMinute();
+                    sHour=Integer.toString(hour);
+                    sMinute=Integer.toString(minute);
+                    time=sHour+":"+sMinute;
+                    if (originAlarm==null){ //기존의 것 삭제하고 새로 생성
+                        dbHelper.deleteDBcontent(db,originTitle);
+                        dbHelper.insertDBcontent(db,title,content,time);
+                    }else{ //기존 일정 업데이트
+                        dbHelper.updateDBcontent(db,title,originTitle,content,originContent,time,originAlarm);
+                    }
+                    setAlarm(); //새 알람 설정
+                }else{ //수정 시 알람 OFF, 기존에 설정했던 알람은 취소
+                    if (originAlarm!=null){ //->따로 조건문을 만들까??
+                        stringSplit(originAlarm);
+                        cancelAlarm(originHour,originMinute); //기존 알람 취소
+                    }
+                    db.execSQL("UPDATE "+tableName+" SET "+"Title="+"'"+title+"'"+" WHERE Title="+"'"+originTitle+"'"+";");
+                    db.execSQL("UPDATE "+tableName+" SET "+"Content="+"'"+content+"'"+" WHERE Content="+"'"+originContent+"'"+";");
+                }
+                scheduleListDialog.dismiss();
+                Toast.makeText(CalendarActivity.this,"수정되었습니다.",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final AlertDialog alertDialog=builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    } //제목, 내용 업데이트 완료, 알람 수정 미완료
+
+    public void cancelAlarm(String originHour,String originMinute){
+        String rqCodeInModi=sMonth+sDay+originHour+originMinute+"00"; //기존에 설정했던 알람을 취소하기 위해 요청 코드 재설정
+        int requestCode=Integer.parseInt(rqCodeInModi);
+        Intent intent=new Intent(contextCalendar,AlarmReceiver.class);
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(contextCalendar,requestCode,intent,PendingIntent.FLAG_UPDATE_CURRENT); //0
+        alarmManager.cancel(pendingIntent);
+    }
+
+    public void stringSplit(String s){
+        String[] splitString=s.split(":");
+        originHour=splitString[0];
+        originMinute=splitString[1];
     }
 
     private void setUpRecyclerView(){

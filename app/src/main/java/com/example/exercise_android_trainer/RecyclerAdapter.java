@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
@@ -76,15 +78,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         notifyItemRemoved(position);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLeftClick(int position, RecyclerView.ViewHolder viewHolder) {
-
+        String originTitle=arrayList.get(position).getT1();
+        String originContent=arrayList.get(position).getT2();
+        String originAlarm=arrayList.get(position).getT3();
+        ((CalendarActivity)CalendarActivity.contextCalendar).modifyCalendarDialog(originTitle,originContent,originAlarm);
     }
 
     @Override
     public void onRightClick(int position, RecyclerView.ViewHolder viewHolder) {
 
-        //ListViewData4 data4=arrayList.get(position);
         dbHelper=new DBHelper(context,dbName,null,1,month,day);
         db=dbHelper.getReadableDatabase();
         dbHelper.deleteDBcontent(db,arrayList.get(position).getT1());
@@ -98,11 +103,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
 
             AlarmManager alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             Intent intent=new Intent(context,AlarmReceiver.class);
-            //original requestCode=1 , original flag==FLAG_UPDATE_CURRENT
             PendingIntent pendingIntent=PendingIntent.getBroadcast(context,requestCode1,intent,PendingIntent.FLAG_UPDATE_CURRENT); //0
             alarmManager.cancel(pendingIntent);
         }
-
         Log.w("InRecyclerAdapter_RC", String.valueOf(requestCode1));
         arrayList.remove(position);
         notifyItemRemoved(position);

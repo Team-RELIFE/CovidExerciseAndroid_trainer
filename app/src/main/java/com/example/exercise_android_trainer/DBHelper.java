@@ -1,5 +1,6 @@
 package com.example.exercise_android_trainer;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -7,6 +8,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+/**
+ * 일정관리 전용 데이터베이스
+ * 모든 컬럼들을 한번에 삽입,삭제,변경할 때 사용
+ * 컬럼 따로따로 삽입,삭제,변경 시 sql문 사용
+ */
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String TITLE="Title";
@@ -28,11 +34,6 @@ public class DBHelper extends SQLiteOpenHelper {
         /*테이블 이름 설정 방법*/
         /*데이터 삽입*/
         String sql="CREATE TABLE if not exists"+" "+"schedule"+tableName+"("+TITLE+" TEXT,"+CONTENT+" TEXT,"+ALARM+" TEXT);";
-//        String sql="CREATE TABLE if not exists tableName("
-//                + "_id integer primary key autoincrement,"
-//                + TITLE+" TEXT,"
-//                + CONTENT+ " TEXT,"
-//                +ALARM+" TEXT);";
         db.execSQL(sql); /*sql문 실행*/
     }
 
@@ -44,17 +45,29 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void deleteDBcontent(SQLiteDatabase db, String i){
+    public void insertDBcontent(SQLiteDatabase db, String title,String content,String alarm){ //데이터 삽입
         String tableName="schedule"+month+day;
-        //db.delete("schedule"+month+day,"Title=?",new String[]{i});
-        String sql="DELETE FROM " + "schedule" + month + day + " WHERE Title=" + "'" + i + "'" + ";";
-        System.out.println(sql);
-        //String sql2="DELETE FROM schedule72 WHERE Title='ppt';";
-        //"DELETE FROM schedule72 WHERE Title=라라랄;"
-        //String sql="DELETE FROM " + "schedule" + month + day + " WHERE Title=" + "'??'" + ";"; - ok
-        db.execSQL(sql);
-        Log.w("TAG","Table row delete execute");
-        //db.delete("schedule"+month+day, "Title=" + i,null);
+        ContentValues values=new ContentValues();
+        values.put("Title",title);
+        values.put("Content",content);
+        values.put("Alarm",alarm);
+        db.insert(tableName,null,values);
+        //String sql="INSERT "+"INTO "+tableName+"("+"Alarm"+")"+" VALUES"+"("+"'"+i+"'"+")"+";";
+        //db.execSQL(sql);
+        Log.w("TAG","Table row insert execute");
     }
 
+    public void deleteDBcontent(SQLiteDatabase db, String i){ //동일한 제목의 일정이 있을 때, 하나의 일정을 삭제하면 동일한 제목을 가진 일정이 모두 다 삭제되는 오류 발생
+        String tableName="schedule"+month+day;
+        String sql="DELETE FROM " + "schedule" + month + day + " WHERE Title=" + "'" + i + "'" + ";";
+        db.execSQL(sql);
+        Log.w("TAG","Table row delete execute");
+    }
+
+    public void updateDBcontent(SQLiteDatabase db,String title,String originTitle,String content,String originContent,String alarm,String originAlarm){ //데이터 변경
+        String tableName="schedule"+month+day;
+        db.execSQL("UPDATE "+tableName+" SET "+"Title="+"'"+title+"'"+" WHERE Title="+"'"+originTitle+"'"+";");
+        db.execSQL("UPDATE "+tableName+" SET "+"Content="+"'"+content+"'"+" WHERE Content="+"'"+originContent+"'"+";");
+        db.execSQL("UPDATE "+tableName+" SET "+"Alarm="+"'"+alarm+"'"+" WHERE Alarm="+"'"+originAlarm+"'"+";");
+    }
 }

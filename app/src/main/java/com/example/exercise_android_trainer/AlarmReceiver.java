@@ -60,6 +60,5 @@ public class AlarmReceiver extends BroadcastReceiver{
         builder.setContentIntent(pendingIntent);
         Notification notification=builder.build(); //Notification 객체 생성
         manager.notify(1,notification); //NotificationManager에게 알림 요청
-
     }
 }
