@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 /**
  * 일정관리 전용 데이터베이스
- * 모든 컬럼들을 한번에 삽입,삭제,변경할 때 사용
+ * 일정들을 한번에 삽입,삭제,변경할 때 사용
  * 컬럼 따로따로 삽입,삭제,변경 시 sql문 사용
  */
 public class DBHelper extends SQLiteOpenHelper {
@@ -52,8 +52,6 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("Content",content);
         values.put("Alarm",alarm);
         db.insert(tableName,null,values);
-        //String sql="INSERT "+"INTO "+tableName+"("+"Alarm"+")"+" VALUES"+"("+"'"+i+"'"+")"+";";
-        //db.execSQL(sql);
         Log.w("TAG","Table row insert execute");
     }
 
@@ -61,7 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String tableName="schedule"+month+day;
         String sql="DELETE FROM " + "schedule" + month + day + " WHERE Title=" + "'" + i + "'" + ";";
         db.execSQL(sql);
-        Log.w("TAG","Table row delete execute");
+        Log.i("TAG","Table row delete execute in calendar3.db");
     }
 
     public void updateDBcontent(SQLiteDatabase db,String title,String originTitle,String content,String originContent,String alarm,String originAlarm){ //데이터 변경

@@ -20,8 +20,6 @@ import java.util.ArrayList;
 //android:exported 속성을 false로 설정하면 리시버가 내 앱으로부터 전달되는 인텐트만 받음
 public class AlarmReceiver extends BroadcastReceiver{
 
-    String alarm_title=((CalendarActivity)CalendarActivity.contextCalendar).title;
-
     public AlarmReceiver(){}
 
     NotificationManager manager;
@@ -50,11 +48,13 @@ public class AlarmReceiver extends BroadcastReceiver{
 
         Intent intent2=new Intent(context, MyService.class);
         int requestCode2=intent.getExtras().getInt("requestCode");
+        String title=intent.getExtras().getString("alarmTitle");
 
         Log.w("AlarmReceiver is Called", String.valueOf(requestCode2));
         PendingIntent pendingIntent=PendingIntent.getActivity(context,requestCode2,intent2,PendingIntent.FLAG_UPDATE_CURRENT); //Activity를 시작하는 인텐트 생성
 
-        builder.setContentTitle(alarm_title); //알림창 제목
+        //builder.setContentTitle(alarm_title); //알림창 제목
+        builder.setContentTitle(title); //수정
         builder.setSmallIcon(R.drawable.clocks);
         builder.setAutoCancel(true); //알림창 터치시 자동 삭제
         builder.setContentIntent(pendingIntent);

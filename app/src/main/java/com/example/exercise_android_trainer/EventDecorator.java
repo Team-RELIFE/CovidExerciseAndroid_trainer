@@ -1,13 +1,17 @@
 package com.example.exercise_android_trainer;
 
+import android.util.Log;
+
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class EventDecorator implements DayViewDecorator {
 
@@ -17,6 +21,10 @@ public class EventDecorator implements DayViewDecorator {
     public EventDecorator(int color, Collection<CalendarDay> dates){
         this.color=color;
         this.dates=new HashSet<>(dates);
+        Iterator it=dates.iterator();
+        while (it.hasNext()){
+            System.out.println(it.next()+" ");
+        }
     }
 
     @Override
@@ -28,4 +36,5 @@ public class EventDecorator implements DayViewDecorator {
     public void decorate(DayViewFacade view) {
         view.addSpan(new DotSpan(5,color));
     }
+
 }

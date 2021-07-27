@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,10 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder> implements  ItemTouchHelperListener,OnDialogListener{
 
@@ -28,16 +35,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
     Context context;
     String month,day,alarm;
     int requestCode1=((CalendarActivity)CalendarActivity.contextCalendar).requestCode1;
+    int iYear=CalendarDay.today().getYear();
+    int iMonth,iDay;
 
-    SQLiteDatabase db;
+    SQLiteDatabase db,db2;
     final static String dbName="calendar3.db"; /*db이름*/
+    final static String dbName2="calendar_monthDay";
     DBHelper dbHelper;
+    dotspanDBHelper dotspanDBHelper;
 
     public RecyclerAdapter(Context context,String month,String day,String alarm){ //수정 -> 매개변수에 alarm 추가
         this.context=context;
         this.month=month;
         this.day=day;
         this.alarm=alarm;
+        iMonth=Integer.parseInt(month);
+        iDay=Integer.parseInt(day);
     }
 
     @NonNull
@@ -90,6 +103,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
     @Override
     public void onRightClick(int position, RecyclerView.ViewHolder viewHolder) {
 
+        //도트 삭제를 위해 CalendarActivity의 캘린더뷰 + 데코레이터에 접근
+        MaterialCalendarView calendarView=((CalendarActivity)CalendarActivity.contextCalendar).calendarView;
+        EventDecorator ev=((CalendarActivity)CalendarActivity.contextCalendar).ev;
+
         dbHelper=new DBHelper(context,dbName,null,1,month,day);
         db=dbHelper.getReadableDatabase();
         dbHelper.deleteDBcontent(db,arrayList.get(position).getT1());
@@ -109,7 +126,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         Log.w("InRecyclerAdapter_RC", String.valueOf(requestCode1));
         arrayList.remove(position);
         notifyItemRemoved(position);
+
+        //클릭한 일정 목록이 비었다면
+        if (arrayList.size()==0){
+            dotspanDBHelper=new dotspanDBHelper(context,dbName2,null,1);
+            db2=dotspanDBHelper.getReadableDatabase();
+            dotspanDBHelper.deleteDBcontent(db2,month,day);
+            calendarView.removeDecorator(ev); //도트 삭제
+        }
     }
+
 
     @Override
     public void onFinish(int position, ListViewData4 item) {

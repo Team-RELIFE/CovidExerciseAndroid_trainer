@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/dateText1"
             android:text="일"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
