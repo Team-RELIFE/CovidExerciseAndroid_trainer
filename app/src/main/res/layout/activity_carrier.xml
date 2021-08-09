@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollview1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#54BFEF">
+
+                <ImageButton
+                    android:id="@+id/menuIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00ff0000"
+                    android:src="@drawable/ic_stat_menu" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="확 찐자 운동관리"
+                    android:textColor="@color/white" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <TextView
+                android:id="@+id/userinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="개인정보 수정"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/blogImage1"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_below="@+id/userinfo"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/naver" />
+
+            <TextView
+                android:id="@+id/blogText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userinfo"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/blogImage1"
+                android:text="blog"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/blogAddress"
+                android:layout_width="330dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/blogImage1"
+                android:layout_centerHorizontal="true"
+                android:hint="blog url 입력"
+                android:textSize="16dp"
+                android:layout_marginLeft="15dp"/>
+
+            <ImageView
+                android:id="@+id/instaIcon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_below="@+id/blogAddress"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/instagram" />
+
+            <TextView
+                android:text="instagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/instaIcon"
+                android:textSize="17dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@+id/blogAddress"/>
+
+            <EditText
+                android:id="@+id/instaAddress"
+                android:layout_width="330dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/instaIcon"
+                android:layout_centerHorizontal="true"
+                android:hint="instagram url 입력"
+                android:textSize="16dp"
+                android:layout_marginLeft="15dp"/>
+
+            <TextView
+                android:id="@+id/careerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경력사항"
+                android:layout_below="@+id/instaAddress"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="30dp"/>
+
+
+            <ScrollView
+                android:id="@+id/scrollview2"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/careerText"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/careerEdit1"
+                        android:layout_width="320dp"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/careerText"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start"
+                        android:hint=" ex) oo헬스장 퍼스널 트레이너 2년 근무"
+                        android:background="@drawable/border"
+                        android:textSize="15dp"
+                        android:layout_centerHorizontal="true"/>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가능한 수업 시간"
+                android:layout_below="@+id/scrollview2"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="30dp"/>
+
+            <TextView
+                android:id="@+id/timeTextEx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ex) 오후 9시 -> 21시 00분"
+                android:layout_below="@+id/timeText"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"/>
+
+            <EditText
+                android:id="@+id/hourEdit1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timeTextEx"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:hint="시작 시간"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/hourEdit2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/hourEdit1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:layout_below="@+id/timeTextEx"
+                android:hint="종료 시간"/>
+
+            <Spinner
+                android:id="@+id/daySpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timeTextEx"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:spinnerMode="dropdown"
+                android:layout_toRightOf="@+id/hourEdit2"/>
+
+
+            <Button
+                android:id="@+id/timeaddBtn"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/scrollview2"
+                android:layout_marginTop="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:textSize="13dp"
+                android:textColor="@color/white"
+                android:background="@drawable/roundshape"
+                android:backgroundTint="@color/black"
+                android:text="추가"/>
+
+
+            <TextView
+                android:id="@+id/timeTextList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="목록"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_below="@+id/hourEdit1"/>
+
+            <ListView
+                android:id="@+id/listView3"
+                android:layout_width="320dp"
+                android:layout_height="140dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:scrollbars="none"
+                android:background="@drawable/border"
+                android:layout_below="@+id/timeTextList"/>
+
+            <TextView
+                android:id="@+id/workAreaText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자격증 (최대 7개)"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/listView3"/>
+
+            <EditText
+                android:id="@+id/workAreaEdit"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:hint="자격증 입력"
+                android:textSize="14dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/workAreaText"/>
+
+            <Button
+                android:id="@+id/workAddBtn"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/workAreaEdit"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="추가"
+                android:textSize="13dp"
+                android:textColor="@color/white"
+                android:background="@drawable/roundshape"
+                android:backgroundTint="@color/black"/>
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="320dp"
+                android:layout_height="140dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none"
+                android:background="@drawable/border"
+                android:layout_below="@+id/workAddBtn"/>
+
+            <TextView
+                android:id="@+id/prizeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수상 경력 (최대 7개)"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_below="@+id/listView"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:id="@+id/prizeEdit"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/prizeText"
+                android:layout_centerHorizontal="true"
+                android:textSize="15dp"
+                android:hint="수상 경력 입력"/>
+
+            <Button
+                android:id="@+id/prizeAddBtn"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:text="추가"
+                android:textSize="13dp"
+                android:layout_below="@+id/prizeEdit"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"
+                android:background="@drawable/roundshape"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"/>
+
+            <ListView
+                android:id="@+id/listView2"
+                android:layout_width="320dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none"
+                android:layout_below="@+id/prizeAddBtn"
+                android:background="@drawable/border"
+                android:layout_centerHorizontal="true"/>
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/listView2"
+                android:layout_marginHorizontal="250dp"
+                android:layout_marginTop="20dp"
+                android:text="수정하기" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
