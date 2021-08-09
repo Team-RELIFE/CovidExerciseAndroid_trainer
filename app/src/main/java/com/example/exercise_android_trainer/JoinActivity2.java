@@ -10,7 +10,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,12 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +45,9 @@ public class JoinActivity2 extends AppCompatActivity {
     ListAdapter2 listAdapter2;
     ListAdapter3 listAdapter3;
     EditText houredt1,houredt2,workAreaEdit,prizeEdit;
+    EditText nicknameEt, emailEt, passwordEt, passwordChkEt, phoneNumEt, nameEt;
     String edt1,edt2,sp,edt3,edt4; /*edittext,spinner를 string형태로 변환*/
+    String nickname, email, password, passwordChk, phoneNum, name;
     Spinner spinner; /*요일 선택 스피너*/
     ArrayAdapter arrayAdapter; /*spinner용 어댑터*/
 
@@ -46,6 +55,15 @@ public class JoinActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join2);
+
+        //기본 정보 입력 사항
+        nicknameEt = findViewById(R.id.nickname);
+        emailEt = findViewById(R.id.joinIdEdit);
+        passwordEt = findViewById(R.id.joinPassEdit1);
+        passwordChkEt = findViewById(R.id.joinPassEdit2);
+        phoneNumEt = findViewById(R.id.joinPhoneEdit);
+        nameEt = findViewById(R.id.joinNameEdit);
+
         
         joinOkBtn=(ImageButton)findViewById(R.id.JoinOkBtn);
         galleryBtn=(ImageButton)findViewById(R.id.galleryBtn);
@@ -54,24 +72,10 @@ public class JoinActivity2 extends AppCompatActivity {
         workaddBtn=(Button)findViewById(R.id.workAddBtn);
         prizeaddBtn=(Button)findViewById(R.id.prizeAddBtn);
 
-        //recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
-        //recyclerAdapter=new RecyclerAdapter();
-        //arrayList=new ArrayList<>();
-
-        //recyclerDecoration=new RecyclerDecoration(10);
-        //dividerItemDecoration=new DividerItemDecoration(recyclerView.getContext(),new LinearLayoutManager(this).getOrientation());
-
-        //linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false); /*리스트 형태 수직으로*/
-        //recyclerView.setLayoutManager(linearLayoutManager);
-        //recyclerView.setAdapter(recyclerAdapter); /*리사이클러뷰와 어댑터 연결*/
-
         spinner=(Spinner)findViewById(R.id.daySpinner);
         arrayAdapter=ArrayAdapter.createFromResource(this,R.array.day_list, android.R.layout.simple_spinner_dropdown_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter); /*스피너와 어댑터 연결*/
-
-        //recyclerView.addItemDecoration(recyclerDecoration);
-        //recyclerView.addItemDecoration(dividerItemDecoration);
 
         listView=(ListView)findViewById(R.id.listView);
         listAdapter=new ListAdapter();
@@ -135,8 +139,7 @@ public class JoinActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.JoinOkBtn: /*가입 완료 -> 메인 화면으로 이동*/
-                        Intent intent1=new Intent(JoinActivity2.this,MainActivity2.class);
-                        startActivity(intent1);
+                        signUp();
                         break;
                     case R.id.galleryBtn: /*클릭 시 갤러리로 이동*/
                         Intent intent2=new Intent();
@@ -191,6 +194,131 @@ public class JoinActivity2 extends AppCompatActivity {
             }
         }
     }
+
+    //회원가입
+    private void signUp(){
+        nickname = nicknameEt.getText().toString();
+        email = emailEt.getText().toString().trim();
+        password = passwordEt.getText().toString().trim();
+        passwordChk = passwordChkEt.getText().toString().trim();
+        phoneNum = phoneNumEt.getText().toString().trim();
+        name = nameEt.getText().toString().trim();
+
+        // 모든 정보 입력 여부 체크
+        //TODO : 글자수 체크, 기본키(아이디) 존재 여부 체크
+        if(email.length()==0 || password.length()==0 || name.length()==0 || phoneNum.length()==0 || nickname.length()==0) {
+            Toast toast = Toast.makeText(getApplicationContext(), "입력하지 않은 정보가 있습니다.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        // 비밀번호 체크
+        else if (!password.contentEquals(passwordChk)) {
+            Toast toast = Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        else {
+            Intent intent1=new Intent(JoinActivity2.this,MainActivity2.class);
+            connectDB();
+            startActivity(intent1);
+        }
+    }
+
+
+    private void connectDB(){
+
+        //                         http://서버 ip:포트번호(tomcat 8080포트 사용)/DB연동하는 jsp파일
+        final String SIGNIN_URL = getString(R.string.db_server)+"signup.jsp";
+        final String urlSuffix = "?email=" + email + "&nickname=" + nickname + "&password=" + password + "&phoneNum=" + phoneNum + "&name=" + name;
+
+        class SignupUser extends AsyncTask<String, Void, String> {
+
+            //스레드 관련 및 ui와의 통신을 위한 함수들이 구현되어 있음
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s); // s : DB로부터 리턴된 값
+
+                if (s != null) { //리턴 값이 null이 아니면 jsonArray로 값 목록을 받음
+
+                    try{
+                        if (!s.contains("success")) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "입력한 정보를 다시 확인해주세요.", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "가입이 완료되었습니다.", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "서버와의 통신에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                BufferedReader bufferedReader = null;
+                String line = null, page = "";
+
+                try {
+                    HttpURLConnection conn = null;
+
+                    URL url = new URL(SIGNIN_URL); //요청 URL을 입력
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST"); //요청 방식을 설정 (default : GET)
+                    conn.setRequestProperty("Accept-Charset", "UTF-8");
+                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                    conn.setDoInput(true); //input을 사용하도록 설정 (default : true)
+                    conn.setDoOutput(true); //output을 사용하도록 설정 (default : false)
+
+
+                    //strParams에 데이터를 담아 서버로 보냄
+                    String strParams = "email=" + email + "&nickname=" + nickname + "&password=" + password + "&phoneNum=" + phoneNum + "&name=" + name;
+
+                    OutputStream os = conn.getOutputStream();
+                    os.write(strParams.getBytes("UTF-8"));
+                    os.flush();
+                    os.close();
+
+                    // 통신 체크 : 연결 실패시 null 반환하고 종료
+                    if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                        Log.d("JoinActivity", "통신 오류");
+                        return null;
+                    }
+
+                    else {
+                        BufferedReader bufreader = new BufferedReader(
+                                new InputStreamReader(
+                                        conn.getInputStream(), "utf-8"));
+                        while ((line = bufreader.readLine()) != null) {
+                            page += line;
+                        }
+
+                        return page;
+                    }
+                }
+
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+        }
+
+        SignupUser su = new SignupUser();
+        su.execute(urlSuffix);
+    }
+
 
     @Override
     public void onBackPressed() {

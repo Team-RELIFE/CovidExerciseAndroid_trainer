@@ -14,7 +14,8 @@
         android:text="OOO 님"
         android:textColor="#00BCD4"
         android:textSize="30dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:id="@+id/nameTV"/>
 
     <TextView
         android:layout_width="wrap_content"

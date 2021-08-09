@@ -102,6 +102,20 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
 
+
+        //drawer header :: 로그인한 상태라면 유저 이름을 표시, 아니라면(게스트 로그인) "Guest"로 표시
+        View drawerHeader = navigationView.getHeaderView(0);
+        TextView header_userName = (TextView) drawerHeader.findViewById(R.id.nameTV);
+        User currentUser = new User().getCurrentUser();
+
+        if (currentUser.id != null) {
+            header_userName.setText(currentUser.name+" 님");
+        }
+        else {
+            header_userName.setText("Guest 님");
+        }
+
+
         /*소셜 로그인과 회원 로그인 분리해야 할듯? 일단 로그아웃 시에는 문제가 없음*/
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -159,4 +159,14 @@
         android:layout_centerInParent="true"
         />
 
+    <TextView
+        android:id="@+id/guestLoginTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="게스트로 이용하기"
+        android:layout_below="@+id/passSearchBtn"
+        android:layout_centerInParent="true"
+        android:textColor="#54BFEF"
+        android:layout_marginTop="120dp"/>
+
 </RelativeLayout>
