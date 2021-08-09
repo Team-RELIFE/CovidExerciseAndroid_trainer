@@ -27,13 +27,14 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder> implements  ItemTouchHelperListener,OnDialogListener{
 
     private ArrayList<ListViewData4> arrayList=new ArrayList<>();
     Context context;
-    String month,day,alarm;
+    String year,month,day,alarm;
     int requestCode1=((CalendarActivity)CalendarActivity.contextCalendar).requestCode1;
     int iYear=CalendarDay.today().getYear();
     int iMonth,iDay;
@@ -51,6 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         this.alarm=alarm;
         iMonth=Integer.parseInt(month);
         iDay=Integer.parseInt(day);
+        year=Integer.toString(iYear);
     }
 
     @NonNull
@@ -103,9 +105,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
     @Override
     public void onRightClick(int position, RecyclerView.ViewHolder viewHolder) {
 
-        //도트 삭제를 위해 CalendarActivity의 캘린더뷰 + 데코레이터에 접근
+        //도트 삭제를 위해 CalendarActivity의 캘린더뷰 + 데코레이터에 접근 -> 최근에 저장한 날짜가 삭제되는 오류
         MaterialCalendarView calendarView=((CalendarActivity)CalendarActivity.contextCalendar).calendarView;
-        EventDecorator ev=((CalendarActivity)CalendarActivity.contextCalendar).ev;
+        HashMap<String,EventDecorator> eventMap=((CalendarActivity)CalendarActivity.contextCalendar).eventMap;
+        String evKey=year+month+day;
 
         dbHelper=new DBHelper(context,dbName,null,1,month,day);
         db=dbHelper.getReadableDatabase();
@@ -114,28 +117,39 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         if (alarm!=null){ //알람 시간을 설정했을 경우
             //알람 취소, 요청코드 : 월+일+시+00
             String alarmText=arrayList.get(position).getT3(); //선택한 위치의 알람 문자열 get
-            alarmText=alarmText.replace(":",""); //알람 문자열 사이의 : 문자 제거
-            String srequestCode=month+day+alarmText+"00";
-            requestCode1=Integer.parseInt(srequestCode); //요청코드 문자열을 정수로 변환
+            if (alarmText!=null){
+                alarmText=alarmText.replace(":",""); //알람 문자열 사이의 : 문자 제거
+                String srequestCode=month+day+alarmText+"00";
+                requestCode1=Integer.parseInt(srequestCode); //요청코드 문자열을 정수로 변환
 
-            AlarmManager alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-            Intent intent=new Intent(context,AlarmReceiver.class);
-            PendingIntent pendingIntent=PendingIntent.getBroadcast(context,requestCode1,intent,PendingIntent.FLAG_UPDATE_CURRENT); //0
-            alarmManager.cancel(pendingIntent);
+                AlarmManager alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                Intent intent=new Intent(context,AlarmReceiver.class);
+                PendingIntent pendingIntent=PendingIntent.getBroadcast(context,requestCode1,intent,PendingIntent.FLAG_UPDATE_CURRENT); //0
+                alarmManager.cancel(pendingIntent);
+            }
         }
-        Log.w("InRecyclerAdapter_RC", String.valueOf(requestCode1));
+        Log.w("alarm is canceled", String.valueOf(requestCode1));
         arrayList.remove(position);
         notifyItemRemoved(position);
 
         //클릭한 일정 목록이 비었다면
-        if (arrayList.size()==0){
+        //일정 여러개를 한꺼번에 삭제하면 도트 삭제 안됨
+        //hashmap 에서 value를 계속 덮어쓰는데 이게 문제인가..흠 근데 한개씩은 삭제 잘 되는디
+        //아 반복문?흠
+        //데코레이터 객체 갱신? 으에에에에
+        //가장 마지막으로 삭제한 일정의 데코레이터 객체 가져오기?
+        //객체 종류는 상관 없는 것 같은데..
+        //왜 삭제 안돼애
+        if (arrayList.size()==0 && eventMap.get(evKey)!=null){
             dotspanDBHelper=new dotspanDBHelper(context,dbName2,null,1);
             db2=dotspanDBHelper.getReadableDatabase();
             dotspanDBHelper.deleteDBcontent(db2,month,day);
-            calendarView.removeDecorator(ev); //도트 삭제
+            calendarView.removeDecorator(eventMap.get(evKey)); //도트 삭제
+            eventMap.remove(evKey);
+            //System.out.println("Deleted Event Decorator:" + eventMap.get(evKey));
+            Log.i("Event Delete","dot is eliminated");
         }
     }
-
 
     @Override
     public void onFinish(int position, ListViewData4 item) {

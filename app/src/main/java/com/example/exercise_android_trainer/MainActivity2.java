@@ -21,9 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.navigation.NavigationView;
 import com.nhn.android.naverlogin.OAuthLogin;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,9 +42,20 @@ public class MainActivity2 extends AppCompatActivity {
     OAuthLogin mOAuthLogin;
     Context nContext;
     TextView mainText1;
+
+    /*신규회원 리스트*/
+    ArrayList<newUserData> arrayList=new ArrayList<>();
+    ViewPager2 user_Viewpager;
+
+    /*트레이너 랭킹*/
+    ArrayList<RankingData> rankingList=new ArrayList<>();
+    RecyclerView tr_Recyclerview;
+    RankingAdapter rankingAdapter;
+
     @BindView(R.id.pt_list_Btn) Button ptListBtn;    //TODO : PT list 버튼 -> 리스트 만들어 연동하기 (우선 PT 화면으로 바로 이동)
     private long time=0;
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +67,9 @@ public class MainActivity2 extends AppCompatActivity {
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView=(NavigationView)findViewById(R.id.navi_view);
         nContext=this;
-        mainText1=(TextView)findViewById(R.id.main2_Text1);
+        user_Viewpager=(ViewPager2)findViewById(R.id.user_viewpager);
+        tr_Recyclerview=(RecyclerView)findViewById(R.id.trainer_rangkingView);
+        //mainText1=(TextView)findViewById(R.id.main2_Text1);
 
         /*액션바 대신 툴바 사용*/
         setSupportActionBar(toolbar);
@@ -59,9 +77,22 @@ public class MainActivity2 extends AppCompatActivity {
         //getActionBar사용시 오류//
 
 
-        Animation animation= new AlphaAnimation(0.0f,1.0f);
-        animation.setDuration(2000);
-        mainText1.startAnimation(animation);
+//        Animation animation= new AlphaAnimation(0.0f,1.0f);
+//        animation.setDuration(2000);
+//        mainText1.startAnimation(animation);
+
+        arrayList.add(new newUserData(getDrawable(R.drawable.coach),"닉네임1"));
+        arrayList.add(new newUserData(getDrawable(R.drawable.diet),"닉네임2"));
+        user_Viewpager.setAdapter(new UserSlideAdapter(this, arrayList));
+        user_Viewpager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+
+        tr_Recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        rankingList.add(new RankingData(getDrawable(R.drawable.coach),"1","트레이너1"));
+        rankingAdapter=new RankingAdapter(rankingList, this);
+
+        tr_Recyclerview.setAdapter(rankingAdapter);
+        rankingAdapter.notifyDataSetChanged();
+
 
         /*메뉴버튼 눌렀을 때 내비게이션 드로어 오픈*/
         menuIcon.setOnClickListener(new View.OnClickListener() {

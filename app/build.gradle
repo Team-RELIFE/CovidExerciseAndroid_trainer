@@ -55,6 +55,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.2.0'
     implementation 'com.neovisionaries:nv-websocket-client:2.9'
     implementation 'org.webrtc:google-webrtc:1.0.32006'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     implementation "android.arch.work:work-runtime:1.0.0-alpha02"
 

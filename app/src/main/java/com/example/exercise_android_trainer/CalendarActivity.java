@@ -51,6 +51,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -61,7 +64,7 @@ public class CalendarActivity extends AppCompatActivity {
     ImageButton listOpenBtn,scheduleAddBtn; /*일정 목록 열기, 일정 저장 이미지 버튼*/
     RadioGroup radioGroup1; /*알람 ON/OFF 설정, 수정용 라디오버튼 그룹*/
     MaterialCalendarView calendarView; /*Material 캘린더뷰*/
-    EventDecorator ev; /*일정 이벤트 데코레이터*/
+    //EventDecorator ev; /*일정 이벤트 데코레이터*/
     DBHelper dbHelper; /*일정관리 전용 db 클래스*/
     dotspanDBHelper dotspanDBHelper; /*테이블명 저장용 db 클래스*/
     SQLiteDatabase db,db2; /*SQLiteDatabase*/
@@ -94,7 +97,11 @@ public class CalendarActivity extends AppCompatActivity {
 
     AlertDialog scheduleListDialog; //일정 목록 다이얼로그
 
-    @Override
+    //해시맵에 key(String_year+month+day),value(데코레이터) 형태로 저장
+    //entryset으로 출력
+    public HashMap<String,EventDecorator> eventMap=new HashMap<>();
+
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -147,8 +154,10 @@ public class CalendarActivity extends AppCompatActivity {
                      Log.i("Day",d);
                      int iMonth=Integer.parseInt(m);
                      int iDay=Integer.parseInt(d);
-                     ev=new EventDecorator(Color.BLUE,Collections.singleton(CalendarDay.from(Year,iMonth-1,iDay)));
+                     EventDecorator ev=new EventDecorator(Color.BLUE,Collections.singleton(CalendarDay.from(Year,iMonth-1,iDay)));
                      calendarView.addDecorator(ev);
+                     String evKey=sYear+m+d;
+                     eventMap.put(evKey,ev);
                  }while (cursor.moveToNext());
              }
            }
@@ -203,8 +212,10 @@ public class CalendarActivity extends AppCompatActivity {
                             dbHelper.insertDBcontent(db,title,content,time);
                             setAlarm(); /*setAlarm 함수 호출*/
                             dotspanDBHelper.insertDBcontent(db2,sMonth,sDay);
-                            ev=new EventDecorator(Color.BLUE,Collections.singleton(CalendarDay.from(Year,iMonth-1,iDay)));
+                            EventDecorator ev=new EventDecorator(Color.BLUE,Collections.singleton(CalendarDay.from(Year,iMonth-1,iDay)));
                             calendarView.addDecorator(ev);
+                            String evKey=sYear+sMonth+sDay;
+                            eventMap.put(evKey,ev);
                             Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
                         }
                         else{ //체크박스 off 선택 시
@@ -220,8 +231,19 @@ public class CalendarActivity extends AppCompatActivity {
                             values.put("Content",content);
                             db.insert(schedule+sMonth+sDay,null,values); /*db에 저장*/
                             dotspanDBHelper.insertDBcontent(db2,sMonth,sDay);
-                            ev=new EventDecorator(Color.BLUE,Collections.singleton(CalendarDay.from(Year,iMonth-1,iDay)));
+                            EventDecorator ev=new EventDecorator(Color.BLUE,Collections.singleton(CalendarDay.from(Year,iMonth-1,iDay)));
                             calendarView.addDecorator(ev);
+                            String evKey=sYear+sMonth+sDay;
+                            eventMap.put(evKey,ev);
+
+                            Set<String> keys=eventMap.keySet();
+                            Iterator<String> it=keys.iterator();
+                            while (it.hasNext()){
+                                String key=it.next();
+                                EventDecorator decorator=eventMap.get(key);
+                                System.out.println(key+":"+decorator);
+                            }
+
                             Toast.makeText(CalendarActivity.this,"일정 및 알람 저장",Toast.LENGTH_SHORT).show();
                         }
                     }
