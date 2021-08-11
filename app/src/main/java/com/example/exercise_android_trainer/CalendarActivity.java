@@ -59,6 +59,9 @@ public class CalendarActivity extends AppCompatActivity {
 
     public static Context contextCalendar;
 
+    //메인화면 디자인 수정, 뷰페이저 인덱스 오류 수정
+    //달력 수정
+
     EditText titleText,contentText; /*제목, 내용 입력*/
     Button timeselectBtn; /*스케줄 추가,시간 선책,일정 보기 버튼*/
     ImageButton listOpenBtn,scheduleAddBtn; /*일정 목록 열기, 일정 저장 이미지 버튼*/
