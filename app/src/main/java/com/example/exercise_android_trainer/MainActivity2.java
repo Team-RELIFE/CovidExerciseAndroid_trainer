@@ -13,11 +13,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -166,6 +162,10 @@ public class MainActivity2 extends AppCompatActivity {
                 }
                 if (id==R.id.menu_calendar){
                     Intent intent=new Intent(MainActivity2.this,CalendarActivity.class);
+                    startActivity(intent);
+                }
+                if (id==R.id.menu_post){
+                    Intent intent=new Intent(MainActivity2.this, GetPostsActivity.class);
                     startActivity(intent);
                 }
                 return false;
