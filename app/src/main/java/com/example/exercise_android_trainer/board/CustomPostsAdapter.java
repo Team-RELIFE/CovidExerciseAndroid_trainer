@@ -1,16 +1,15 @@
-package com.example.exercise_android_trainer;
+package com.example.exercise_android_trainer.board;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.exercise_android_trainer.R;
 
-import static java.security.AccessController.getContext;
+import java.util.ArrayList;
 
 public class CustomPostsAdapter extends ArrayAdapter {
     public CustomPostsAdapter(Context context, ArrayList<Post> posts) {

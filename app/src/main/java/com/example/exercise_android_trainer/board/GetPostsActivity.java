@@ -1,4 +1,4 @@
-package com.example.exercise_android_trainer;
+package com.example.exercise_android_trainer.board;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,8 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.example.exercise_android_trainer.R;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -31,44 +30,9 @@ public class GetPostsActivity extends AppCompatActivity {
     }
 
     public void sendData(String s) {
-
-        //posts = new ArrayList<Post>();
-        if (s != null) { //리턴 값이 null이 아니면 jsonArray로 값 목록을 받음
-            try{
-                if (s.length() <= 2) { //검색된 값이 없음
-                    Toast toast = Toast.makeText(getApplicationContext(), "작성된 글이 없습니다.", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else {
-                    JSONArray jArr = new JSONArray(s);;
-//                            ArrayList posts = new ArrayList();
-//                            ArrayList<Post> posts = new ArrayList<Post>();
-                    JSONObject json = new JSONObject();
-
-                    for (int i=0; i<jArr.length();i++) {
-                        json = jArr.getJSONObject(i);
-
-                        String writer = json.getString("writer");
-                        String title = json.getString("title");
-                        String content = json.getString("content");
-
-                        posts.add(new Post(writer, title, content));
-                    }
-                }
-
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-            Toast.makeText(getApplicationContext(), "서버와의 통신에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
-        }
-
-        Intent intent=new Intent(getApplicationContext(),CustomListActivity.class);
+        Intent intent=new Intent(getApplicationContext(), CustomListActivity.class);
         intent.putExtra("result", s);
         startActivity(intent);
-
     }
 
     public void connectDB(){
@@ -77,9 +41,6 @@ public class GetPostsActivity extends AppCompatActivity {
 
         //                         http://서버 ip:포트번호(tomcat 8080포트 사용)/DB연동하는 jsp파일
         final String SIGNIN_URL = getString(R.string.db_server)+"getPosts.jsp";
-        final String urlSuffix = "";
-
-        String writer, title, content;
 
         class UserPost extends AsyncTask<String, Void, String> {
 
@@ -94,11 +55,6 @@ public class GetPostsActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s); // s : DB로부터 리턴된 값
 
-                //Log.d("page", s);
-//                Intent intent=new Intent(GetPostsActivity.this,MainActivity.class);
-//                intent.putExtra(s);
-//                startActivity(intent);
-
                 if (s != null) { //리턴 값이 null이 아니면 jsonArray로 값 목록을 받음
                     try{
                         if (s.length() <= 2) { //검색된 값이 없음
@@ -106,20 +62,7 @@ public class GetPostsActivity extends AppCompatActivity {
                             toast.show();
                         }
                         else {
-                            JSONArray jArr = new JSONArray(s);;
-//                            ArrayList posts = new ArrayList();
-//                            ArrayList<Post> posts = new ArrayList<Post>();
-                            JSONObject json = new JSONObject();
-
-                            for (int i=0; i<jArr.length();i++) {
-                                json = jArr.getJSONObject(i);
-
-                                String writer = json.getString("writer");
-                                String title = json.getString("title");
-                                String content = json.getString("content");
-
-                                posts.add(new Post(writer, title, content));
-                            }
+                            sendData(s);
                         }
 
                     } catch(Exception e) {
@@ -130,8 +73,6 @@ public class GetPostsActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(), "서버와의 통신에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 }
-
-                //Log.d("result:", postlist.get(0).getWriter());
             }
 
             @Override
@@ -174,10 +115,6 @@ public class GetPostsActivity extends AppCompatActivity {
                             page += line;
                         }
 
-                        Log.d("doin", page);
-
-                        sendData(page);
-
                         return page;
                     }
                 }
@@ -192,6 +129,5 @@ public class GetPostsActivity extends AppCompatActivity {
         UserPost up = new UserPost();
         up.execute();
 
-        //System.out.println(postlist.get(0).getContent());
     }
 }

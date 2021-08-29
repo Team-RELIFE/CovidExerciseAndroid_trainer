@@ -22,7 +22,7 @@
         android:title="일정관리"/>
 
     <item
-        android:id="@+id/menu_post"
+        android:id="@+id/menu_board"
         android:icon="@drawable/ic_stat_event"
         android:title="PT 게시판" />
 
