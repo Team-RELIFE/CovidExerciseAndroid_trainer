@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".Calendar.CalendarActivity"></activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,11 +32,11 @@
         <activity android:name=".JoinActivity2" />
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".SessionActivity" />
-        <service android:name=".MyService">
+        <service android:name=".Calendar.MyService">
             android:enabled="true"
             android:exported="true"
         </service>
-        <receiver android:name=".AlarmReceiver">
+        <receiver android:name=".Calendar.AlarmReceiver">
             android:enabled="true"
             android:exported="true"
             <intent-filter>

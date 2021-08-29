@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.exercise_android_trainer.CalendarActivity;
+import com.example.exercise_android_trainer.Calendar.CalendarActivity;
 import com.example.exercise_android_trainer.MainActivity;
 import com.example.exercise_android_trainer.MainActivity2;
 import com.example.exercise_android_trainer.R;

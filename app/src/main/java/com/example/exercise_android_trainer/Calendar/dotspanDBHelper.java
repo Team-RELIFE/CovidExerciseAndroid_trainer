@@ -1,4 +1,4 @@
-package com.example.exercise_android_trainer;
+package com.example.exercise_android_trainer.Calendar;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -51,7 +51,7 @@ public class dotspanDBHelper extends SQLiteOpenHelper { //생성된 일정의 �
                         i++;
                 }while (cursor.moveToNext()); //동일한 값이 존재하지 않으면 새로 삽입
             }
-            if (i==countRows(db)){
+            if (i==cursor.getCount()){
                 ContentValues values=new ContentValues();
                 values.put("Month",month);
                 values.put("Day",day);
@@ -74,12 +74,5 @@ public class dotspanDBHelper extends SQLiteOpenHelper { //생성된 일정의 �
         String sql="DELETE FROM " +tableName+ " WHERE Month=" + "'" + month + "'" + " AND " + "Day=" + "'" + day + "'" + ";";
         db.execSQL(sql);
         Log.i("TAG","Table row delete execute in calendar_monthDay.db");
-    }
-
-    public int countRows(SQLiteDatabase db){ //행 개수 반환
-        int cnt;
-        Cursor cursor=db.rawQuery("SELECT * FROM "+tableName,null);
-        cnt=cursor.getCount();
-        return cnt;
     }
 }

@@ -24,17 +24,5 @@ public class ListViewData3 {
         return selectedDay;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public void setSelectedDay(String selectedDay) {
-        this.selectedDay = selectedDay;
-    }
-
 }
 

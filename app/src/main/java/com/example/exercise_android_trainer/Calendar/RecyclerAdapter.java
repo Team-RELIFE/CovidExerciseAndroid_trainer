@@ -1,12 +1,10 @@
-package com.example.exercise_android_trainer;
+package com.example.exercise_android_trainer.Calendar;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,19 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exercise_android_trainer.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder> implements  ItemTouchHelperListener,OnDialogListener{
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder> implements ItemTouchHelperListener, OnDialogListener {
 
     private ArrayList<ListViewData4> arrayList=new ArrayList<>();
     Context context;
@@ -43,7 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
     final static String dbName="calendar3.db"; /*db이름*/
     final static String dbName2="calendar_monthDay";
     DBHelper dbHelper;
-    dotspanDBHelper dotspanDBHelper;
+    com.example.exercise_android_trainer.Calendar.dotspanDBHelper dotspanDBHelper;
 
     public RecyclerAdapter(Context context,String month,String day,String alarm){ //수정 -> 매개변수에 alarm 추가
         this.context=context;
@@ -107,7 +100,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
 
         //도트 삭제를 위해 CalendarActivity의 캘린더뷰 + 데코레이터에 접근 -> 최근에 저장한 날짜가 삭제되는 오류
         MaterialCalendarView calendarView=((CalendarActivity)CalendarActivity.contextCalendar).calendarView;
-        HashMap<String,EventDecorator> eventMap=((CalendarActivity)CalendarActivity.contextCalendar).eventMap;
+        HashMap<String, EventDecorator> eventMap=((CalendarActivity)CalendarActivity.contextCalendar).eventMap;
         String evKey=year+month+day;
 
         dbHelper=new DBHelper(context,dbName,null,1,month,day);
@@ -123,7 +116,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
                 requestCode1=Integer.parseInt(srequestCode); //요청코드 문자열을 정수로 변환
 
                 AlarmManager alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                Intent intent=new Intent(context,AlarmReceiver.class);
+                Intent intent=new Intent(context, AlarmReceiver.class);
                 PendingIntent pendingIntent=PendingIntent.getBroadcast(context,requestCode1,intent,PendingIntent.FLAG_UPDATE_CURRENT); //0
                 alarmManager.cancel(pendingIntent);
             }

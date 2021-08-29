@@ -25,15 +25,8 @@ public class RankingData {
         return string2;
     }
 
-    public void setRanking(Drawable ranking) {
-        this.ranking = ranking;
-    }
-
     public void setDrawable(Drawable drawable) {
         this.drawable = drawable;
     }
 
-    public void setString2(String string2) {
-        this.string2 = string2;
-    }
 }

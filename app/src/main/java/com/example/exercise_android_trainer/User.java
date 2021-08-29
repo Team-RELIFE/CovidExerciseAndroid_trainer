@@ -23,4 +23,11 @@ public class User {
         User user = new User(this.id, this.phoneNum, this.name, this.nickname);
         return user;
     }
+
+    //현재 접속 중인 유저 정보 업데이트 (신체 정보 X)
+    public void setCurrentUser(String id, String phone, String name) {
+        this.id = id;
+        this.phoneNum = phone;
+        this.name = name;
+    }
 }

@@ -23,9 +23,5 @@ public class newUserData {
     public void setDrawable(Drawable drawable) {
         this.drawable = drawable;
     }
-
-    public void setTextView1(String textView1) {
-        this.textView1 = textView1;
-    }
 }
 

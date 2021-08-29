@@ -1,4 +1,4 @@
-package com.example.exercise_android_trainer;
+package com.example.exercise_android_trainer.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -22,29 +21,24 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.RadialGradient;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.exercise_android_trainer.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -59,9 +53,6 @@ public class CalendarActivity extends AppCompatActivity {
 
     public static Context contextCalendar;
 
-    //메인화면 디자인 수정, 뷰페이저 인덱스 오류 수정
-    //달력 수정
-
     EditText titleText,contentText; /*제목, 내용 입력*/
     Button timeselectBtn; /*스케줄 추가,시간 선책,일정 보기 버튼*/
     ImageButton listOpenBtn,scheduleAddBtn; /*일정 목록 열기, 일정 저장 이미지 버튼*/
@@ -69,7 +60,7 @@ public class CalendarActivity extends AppCompatActivity {
     MaterialCalendarView calendarView; /*Material 캘린더뷰*/
     //EventDecorator ev; /*일정 이벤트 데코레이터*/
     DBHelper dbHelper; /*일정관리 전용 db 클래스*/
-    dotspanDBHelper dotspanDBHelper; /*테이블명 저장용 db 클래스*/
+    com.example.exercise_android_trainer.Calendar.dotspanDBHelper dotspanDBHelper; /*테이블명 저장용 db 클래스*/
     SQLiteDatabase db,db2; /*SQLiteDatabase*/
     TextView alarmText,monthText,dateText; /*선택한 시간 정보를 텍스트로 입력받을 textView*/
     public String setUpAlarmString; /*알람 요청코드_문자열*/
@@ -102,7 +93,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     //해시맵에 key(String_year+month+day),value(데코레이터) 형태로 저장
     //entryset으로 출력
-    public HashMap<String,EventDecorator> eventMap=new HashMap<>();
+    public HashMap<String, EventDecorator> eventMap=new HashMap<>();
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -438,15 +429,6 @@ public class CalendarActivity extends AppCompatActivity {
         String[] splitString=s.split(":");
         originHour=splitString[0];
         originMinute=splitString[1];
-    }
-
-    private void setUpRecyclerView(){
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                itemTouchHelper.onDraw(c, parent, state);
-            }
-        });
     }
 
 }

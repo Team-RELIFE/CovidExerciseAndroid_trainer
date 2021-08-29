@@ -13,8 +13,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,13 +23,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.exercise_android_trainer.Calendar.CalendarActivity;
 import com.example.exercise_android_trainer.board.GetPostsActivity;
-import com.example.exercise_android_trainer.reservation.ReservationListActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.nhn.android.naverlogin.OAuthLogin;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity2 extends AppCompatActivity {
@@ -57,7 +58,7 @@ public class MainActivity2 extends AppCompatActivity {
     //@BindView(R.id.pt_list_Btn) Button ptListBtn;    //TODO : PT list 버튼 -> 리스트 만들어 연동하기 (우선 PT 화면으로 바로 이동)
     private long time=0;
 
-    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +78,11 @@ public class MainActivity2 extends AppCompatActivity {
         TextView userIdTv = (TextView)findViewById(R.id.main2_userID);
         TextView userNicknameTv = (TextView)findViewById(R.id.main2_userNickname);
 
-        if (User.id != null) {
-            String userId = User.id;
-            String userNickname = User.nickname;
+        User currentUser = new User().getCurrentUser();
+
+        if (currentUser.id != null) {
+            String userId = currentUser.id;
+            String userNickname = currentUser.nickname;
 
             userIdTv.setText(userId);
             userNicknameTv.setText(userNickname);
@@ -135,21 +138,12 @@ public class MainActivity2 extends AppCompatActivity {
         TextView header_userName = (TextView) drawerHeader.findViewById(R.id.nameTV);
 //        User currentUser = new User().getCurrentUser();
 
-        if (User.id != null) {
-            header_userName.setText(User.name +" 님");
+        if (currentUser.id != null) {
+            header_userName.setText(currentUser.name+" 님");
         }
         else {
             header_userName.setText("Guest 님");
         }
-
-        ImageView userInfo_iv = (ImageView) findViewById(R.id.userInfo_frame);
-        userInfo_iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity2.this, ReservationListActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
         /*소셜 로그인과 회원 로그인 분리해야 할듯? 일단 로그아웃 시에는 문제가 없음*/
@@ -169,13 +163,13 @@ public class MainActivity2 extends AppCompatActivity {
                     finish();
                 }
                 if (id==R.id.menu_calendar){
-                    Intent intent=new Intent(MainActivity2.this,CalendarActivity.class);
+                    Intent intent=new Intent(MainActivity2.this, CalendarActivity.class);
                     startActivity(intent);
                 }
-                if (id==R.id.menu_board){
-                    Intent intent=new Intent(MainActivity2.this, GetPostsActivity.class);
-                    startActivity(intent);
-                }
+//                if (id==R.id.menu_post){
+//                    Intent intent=new Intent(MainActivity2.this, GetPostsActivity.class);
+//                    startActivity(intent);
+//                }
                 return false;
             }
         });
