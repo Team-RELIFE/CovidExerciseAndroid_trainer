@@ -17,174 +17,302 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-           <ImageButton
-               android:id="@+id/menuIcon"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/ic_stat_menu"
-               android:backgroundTint="#54BFEF" />
+            <ImageButton
+                android:id="@+id/menuIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#54BFEF"
+                android:src="@drawable/ic_stat_menu" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#54BFEF"
-                android:layout_marginLeft="30dp"/>
+                android:layout_marginLeft="30dp"
+                android:textColor="#54BFEF" />
 
         </androidx.appcompat.widget.Toolbar>
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="70dp">
-
-        <ImageView
-            android:id="@+id/userInfo_frame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/rectangle"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/main2_userImage"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
-            app:civ_border_color="@color/white"
-            android:src="@drawable/girl"
-            app:civ_circle_background_color="@color/white"/>
-
-        <TextView
-            android:id="@+id/main2_userNickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/main2_userImage"
-            android:text="NICKNAME"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/main2_userID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/main2_userImage"
-            android:layout_below="@+id/main2_userNickname"
-            android:layout_marginLeft="20dp"
-            android:text="ID"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
-
-        <TextView
-            android:id="@+id/main2_userTrainee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/main2_userImage"
-            android:layout_below="@+id/main2_userID"
-            android:text="현재 수강생 수:"
-            android:textColor="@color/white"
-            android:layout_marginLeft="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/main2_userID"
-            android:layout_toRightOf="@+id/main2_userTrainee"
-            android:text="5"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginLeft="20dp"/>
-
-        <TextView
-            android:id="@+id/main2_userRank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/main2_userImage"
-            android:layout_below="@+id/main2_userTrainee"
-            android:text="RANKING:"
-            android:textColor="@color/white"
-            android:layout_marginLeft="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/main2_userTrainee"
-            android:layout_toRightOf="@+id/main2_userRank"
-            android:text="1"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginLeft="20dp"/>
-
-        <TextView
-            android:id="@+id/main2_Text3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/userInfo_frame"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:text="오늘의 신규 헬린이"
-            android:textColor="#5B5959"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="30dp"
-            android:src="@drawable/gardening"
-            android:layout_below="@+id/userInfo_frame"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/main2_Text3"
-            android:layout_marginLeft="5dp"/>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/user_viewpager"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/main2_Text3"
-            android:layout_marginTop="10dp"/>
-
-        <LinearLayout
-            android:id="@+id/layoutIndicators"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_below="@+id/user_viewpager"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="70dp">
 
-        <TextView
-            android:id="@+id/main2_Text4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/user_viewpager"
-            android:text="TRAINER RANKING"
-            android:textColor="#5B5959"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"/>
+            <ImageView
+                android:id="@+id/userInfo_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/rectangle" />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="30dp"
-            android:src="@drawable/top"
-            android:layout_below="@+id/user_viewpager"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/main2_Text4"
-            android:layout_marginLeft="5dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/main2_userImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/girl"
+                app:civ_border_color="@color/white"
+                app:civ_circle_background_color="@color/white" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trainer_rangkingView"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/main2_Text4"/>
+            <TextView
+                android:id="@+id/main2_userNickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/main2_userImage"
+                android:text="NICKNAME"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/main2_userID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main2_userNickname"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/main2_userImage"
+                android:text="ID"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/main2_userTrainee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main2_userID"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/main2_userImage"
+                android:text="현재 수강생 수:"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main2_userID"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/main2_userTrainee"
+                android:text="5"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/main2_userRank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main2_userTrainee"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/main2_userImage"
+                android:text="RANKING:"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main2_userTrainee"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/main2_userRank"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/board_btn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/userInfo_frame"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundshape"
+                android:backgroundTint="#E3E3E3"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:id="@+id/boardIv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/nickname_modify"
+                    android:backgroundTint="@color/black"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/boardIv"
+                    android:text="PT게시판 바로가기"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/main2_Text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/board_btn"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:text="오늘의 신규 헬린이"
+                android:textColor="#5B5959"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/board_btn"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/main2_Text3"
+                android:src="@drawable/gardening" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/user_viewpager"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main2_Text3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutIndicators"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_viewpager"
+                android:gravity="center"
+                android:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/main2_Text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_viewpager"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:text="TRAINER RANKING"
+                android:textColor="#5B5959"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/user_viewpager"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/main2_Text4"
+                android:src="@drawable/top" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trainer_rangkingView"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main2_Text4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+
+            <RelativeLayout
+                android:id="@+id/messageLayout"
+                android:layout_width="260dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="550dp"
+                android:background="?android:attr/fastScrollPreviewBackgroundRight"
+                android:backgroundTint="@color/white"
+                android:elevation="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/countTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="ㅇ개"
+                    android:textColor="@color/main_blue"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/countTv2"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@+id/countTv"
+                    android:text="의 확인 가능한"
+                    android:textColor="@color/black"></TextView>
+
+                <TextView
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/countTv2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/countTv"
+                    android:text="예약 신청이 있습니다."
+                    android:textColor="@color/black"></TextView>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/messageLayout"-->
+<!--            android:layout_width="250dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:layout_marginLeft="150dp"-->
+<!--            android:layout_marginTop="600dp"-->
+<!--            android:background="?android:attr/fastScrollPreviewBackgroundRight"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            android:elevation="10dp"-->
+<!--            android:visibility="visible">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="250dp"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:layout_marginLeft="150dp"-->
+<!--                android:layout_marginTop="600dp"-->
+<!--                android:background="?android:attr/fastScrollPreviewBackgroundRight"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:elevation="10dp"-->
+<!--                android:visibility="visible"></ImageView>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/countTv"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:text="ㅇ개"-->
+<!--                android:textColor="@color/main_blue"-->
+<!--                android:textSize="25dp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/countTv2"-->
+<!--                android:layout_width="230dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_toRightOf="@+id/countTv"-->
+<!--                android:text="의 확인 가능한"-->
+<!--                android:textColor="@color/black"></TextView>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="230dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/countTv2"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_toRightOf="@+id/countTv"-->
+<!--                android:text="예약 신청이 있습니다."-->
+<!--                android:textColor="@color/black"></TextView>-->
+<!--        </RelativeLayout>-->
+
 
     </RelativeLayout>
+
 
     <include layout="@layout/drawer"/>
 

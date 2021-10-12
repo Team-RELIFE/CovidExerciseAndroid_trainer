@@ -68,7 +68,7 @@ public class UpdatePostActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", LENGTH_SHORT).show();
                 }
                 else {
-                    ConnectServer("updatePost.jsp", content1, content2);
+                    ConnectServer("updatePost.jsp", "id="+id+"&title="+title+"&content="+content);
                 }
                 break;
             case R.id.cancelBtn :
@@ -78,11 +78,11 @@ public class UpdatePostActivity extends AppCompatActivity {
     }
 
 
-    private void ConnectServer(String jspFile, String title, String content){
+    private void ConnectServer(String jspFile, String db_url){
 
         opResult = 0;
         String SIGNIN_URL = getString(R.string.db_server)+jspFile;
-        final String urlSuffix = "?id="+id+"&title="+title+"&content="+content;
+        final String urlSuffix = "?"+db_url;
 
         class SearchHealthRecord extends AsyncTask<String, Void, String> {
 
@@ -126,7 +126,7 @@ public class UpdatePostActivity extends AppCompatActivity {
 
 
                     //strParams에 데이터를 담아 서버로 보냄
-                    String strParams = "id=" + id +"&title="+title+"&content="+content;
+                    String strParams = db_url;
 
                     OutputStream os = conn.getOutputStream();
                     os.write(strParams.getBytes("UTF-8"));

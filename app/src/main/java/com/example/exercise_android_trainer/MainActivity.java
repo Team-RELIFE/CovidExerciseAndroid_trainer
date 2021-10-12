@@ -216,9 +216,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
     /*로그인 인스턴스 초기화 메서드*/
     private void initData(){
         mOAuthLoginInstance=OAuthLogin.getInstance();

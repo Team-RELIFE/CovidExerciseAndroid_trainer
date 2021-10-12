@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.exercise_android_trainer.Calendar.CalendarActivity;
+import com.example.exercise_android_trainer.board.CustomListActivity;
+import com.example.exercise_android_trainer.board.GetPostsActivity;
 import com.nhn.android.naverlogin.OAuthLogin;
 
 /**내비게이션 메뉴 선택 클래스
@@ -43,6 +45,10 @@ public class NaviMenu extends ContextWrapper {
         }
         if(id==R.id.menu_calendar){
             Intent intent=new Intent(context, CalendarActivity.class);
+            startActivity(intent);
+        }
+        if(id==R.id.menu_board){
+            Intent intent=new Intent(context, GetPostsActivity.class);
             startActivity(intent);
         }
     }

@@ -1,49 +1,31 @@
-package com.example.exercise_android_trainer.board;
+package com.example.exercise_android_trainer.reservation;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exercise_android_trainer.R;
+import com.example.exercise_android_trainer.User;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
-public class GetPostsActivity extends AppCompatActivity {
+public class ProcessReservation extends AppCompatActivity {
 
-    public ArrayList<Post> posts = new ArrayList<Post>();
-    String page = "";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.loading);
+    protected void ConnectServer(int id, int reply){
 
-        connectDB();
-    }
+        System.out.println("예약처리 : " + id);
+        final String SIGNIN_URL = "http://192.168.219.102:8080/" + "processReservation.jsp";
+        final String urlSuffix = "?id=" + id + "&reply=" + reply;
+        //Log.d("urlSuffix", urlSuffix);
 
-    public void sendData(String s) {
-        Intent intent=new Intent(getApplicationContext(), CustomListActivity.class);
-        intent.putExtra("result", s);
-        startActivity(intent);
-    }
-
-    public void connectDB(){
-
-        ArrayList<Post> posts = new ArrayList<Post>();
-
-        //                         http://서버 ip:포트번호(tomcat 8080포트 사용)/DB연동하는 jsp파일
-        final String SIGNIN_URL = getString(R.string.db_server)+"getPosts.jsp";
-
-        class UserPost extends AsyncTask<String, Void, String> {
+        class process extends AsyncTask<String, Void, String> {
 
             //스레드 관련 및 ui와의 통신을 위한 함수들이 구현되어 있음
 
@@ -56,31 +38,30 @@ public class GetPostsActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s); // s : DB로부터 리턴된 값
 
+                //s == null -> db 통신 오류, s의 길이는 기본 2이므로 s.length == 2일 때 검색된 값이 없는 것으로 취급
+
                 if (s != null) { //리턴 값이 null이 아니면 jsonArray로 값 목록을 받음
+
                     try{
                         if (s.length() <= 2) { //검색된 값이 없음
-                            Toast toast = Toast.makeText(getApplicationContext(), "작성된 글이 없습니다.", Toast.LENGTH_SHORT);
-                            toast.show();
+                            //Toast.makeText(getApplicationContext(), "내역이 없습니다.", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            sendData(s);
+                            //Toast.makeText(getApplicationContext(), "정상적으로 처리되었습니다.", Toast.LENGTH_SHORT).show();
                         }
-
-                    } catch(Exception e) {
+                    }catch(Exception e) {
                         e.printStackTrace();
                     }
                 }
-
                 else {
-                    Toast.makeText(getApplicationContext(), "서버와의 통신에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "서버와의 통신에 문제가 발생했습니다", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             protected String doInBackground(String... params) {
                 BufferedReader bufferedReader = null;
-                String line = null;
-                page = "";
+                String line = null, page = "";
 
                 try {
                     HttpURLConnection conn = null;
@@ -95,7 +76,7 @@ public class GetPostsActivity extends AppCompatActivity {
 
 
                     //strParams에 데이터를 담아 서버로 보냄
-                    String strParams = "";
+                    String strParams = "id=" + id + "&reply=" + reply;
 
                     OutputStream os = conn.getOutputStream();
                     os.write(strParams.getBytes("UTF-8"));
@@ -104,7 +85,7 @@ public class GetPostsActivity extends AppCompatActivity {
 
                     // 통신 체크 : 연결 실패시 null 반환하고 종료
                     if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                        Log.d("GetPostsActivity", "통신 오류");
+                        Log.d("reserveActivity", "통신 오류");
                         return null;
                     }
 
@@ -123,12 +104,14 @@ public class GetPostsActivity extends AppCompatActivity {
                 catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 return null;
             }
         }
 
-        UserPost up = new UserPost();
-        up.execute();
-
+        process pr = new process();
+        pr.execute(urlSuffix);
     }
+
+
 }

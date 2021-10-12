@@ -13,11 +13,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.exercise_android_trainer.Calendar.CalendarActivity;
 import com.example.exercise_android_trainer.MainActivity;
-import com.example.exercise_android_trainer.MainActivity2;
 import com.example.exercise_android_trainer.R;
 import com.example.exercise_android_trainer.User;
+import com.example.exercise_android_trainer.board.CustomListActivity;
+import com.example.exercise_android_trainer.board.Post;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,10 +27,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class ReservationListActivity extends AppCompatActivity {
+public class GetItemActivity extends AppCompatActivity {
 
     private final String TAG = "ReservationRecordActivity";
+
+    public ArrayList<Item> item = new ArrayList<Item>();
 
     TextView record_list;
     TextView mainText;
@@ -39,14 +42,12 @@ public class ReservationListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.reservation);
+        setContentView(R.layout.loading);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        mainText = (TextView) findViewById(R.id.mainText);
-        record_list = (TextView) findViewById(R.id.record_list); //검색 결과 텍스트뷰
 
         if (User.id != null) {
-            mainText.setText(User.name +"님의 예약 내역");
+//            mainText.setText(User.name +"님의 예약 내역");
             ConnectServer();
         }
         else {
@@ -56,7 +57,7 @@ public class ReservationListActivity extends AppCompatActivity {
             builder.setPositiveButton("확인",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent=new Intent(ReservationListActivity.this, MainActivity.class);
+                            Intent intent=new Intent(GetItemActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
                     });
@@ -70,7 +71,14 @@ public class ReservationListActivity extends AppCompatActivity {
     }
 
 
-    private void ConnectServer(){
+    public void sendData(String s) {
+        Intent intent=new Intent(getApplicationContext(), CustomListActivity2.class);
+        intent.putExtra("result", s);
+        startActivity(intent);
+    }
+
+
+    public void ConnectServer(){
 
         //                         http://서버 ip:포트번호(tomcat 8080포트 사용)/DB연동하는 jsp파일
         final String SIGNIN_URL = getString(R.string.db_server)+"showReservation.jsp";
@@ -99,23 +107,7 @@ public class ReservationListActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "내역이 없습니다.", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            JSONArray jArr = new JSONArray(s);;
-                            JSONObject json = new JSONObject();
-
-                            //jsonArray의 길이(리턴된 값 길이)만큼 jsonObject에 담아 텍스트뷰에 출력
-
-                            for (int i = 0; i < jArr.length(); i++) {
-                                json = jArr.getJSONObject(i);
-
-                                int id = json.getInt("id");
-                                String trainer = json.getString("trainer");
-                                String trainee = json.getString("trainee");
-                                int status = json.getInt("status");
-                                int post = json.getInt("post");
-
-                                record_list.append("예약번호 : "+ String.valueOf(id) + "\n강사명 : " + trainer + "\n예약자명 : " +
-                                        trainee + "\n진행상태 : " + status + "\n게시글 : " + String.valueOf(post)+"\n\n");
-                            }
+                            sendData(s);
                         }
                     }catch(Exception e) {
                         e.printStackTrace();
