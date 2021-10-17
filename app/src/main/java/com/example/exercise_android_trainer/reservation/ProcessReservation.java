@@ -1,9 +1,11 @@
 package com.example.exercise_android_trainer.reservation;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exercise_android_trainer.R;
@@ -17,10 +19,17 @@ import java.net.URL;
 
 public class ProcessReservation extends AppCompatActivity {
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_custom_list2);
+    }
 
     protected void ConnectServer(int id, int reply){
 
         System.out.println("예약처리 : " + id);
+
+        //TODO : ip 주소 매번 수정해주기..ㅠㅠ
         final String SIGNIN_URL = "http://192.168.219.102:8080/" + "processReservation.jsp";
         final String urlSuffix = "?id=" + id + "&reply=" + reply;
         //Log.d("urlSuffix", urlSuffix);
@@ -43,11 +52,11 @@ public class ProcessReservation extends AppCompatActivity {
                 if (s != null) { //리턴 값이 null이 아니면 jsonArray로 값 목록을 받음
 
                     try{
-                        if (s.length() <= 2) { //검색된 값이 없음
-                            //Toast.makeText(getApplicationContext(), "내역이 없습니다.", Toast.LENGTH_SHORT).show();
+                        if (s.contains("success")) { //검색된 값이 없음
+                            //Toast.makeText(getApplicationContext(), "정상적으로 처리되었습니다.", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            //Toast.makeText(getApplicationContext(), "정상적으로 처리되었습니다.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "오류 발생", Toast.LENGTH_SHORT).show();
                         }
                     }catch(Exception e) {
                         e.printStackTrace();

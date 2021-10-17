@@ -30,9 +30,11 @@ public class CustomPostsAdapter extends ArrayAdapter {
         // Lookup view for data population
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         TextView tvWriter = (TextView) convertView.findViewById(R.id.tvWriter);
+        TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
         // Populate the data into the template view using the data object
         tvTitle.setText(post.getTitle());
         tvWriter.setText(post.getWriter());
+        tvDate.setText(post.getDate());
         // Return the completed view to render on screen
         return convertView;
     }

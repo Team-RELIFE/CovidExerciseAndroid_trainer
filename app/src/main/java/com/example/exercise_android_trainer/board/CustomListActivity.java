@@ -61,6 +61,7 @@ public class CustomListActivity extends Activity {
                 postViewActivity.putExtra("title", item.getTitle());
                 postViewActivity.putExtra("writer", item.getWriter());
                 postViewActivity.putExtra("content", item.getContent());
+                postViewActivity.putExtra("date", item.getDate());
                 startActivity(postViewActivity);
             }
         });
@@ -89,8 +90,9 @@ public class CustomListActivity extends Activity {
                         String writer = json.getString("writer");
                         String title = json.getString("title");
                         String content = json.getString("content");
+                        String date = json.getString("date");
 
-                        arrayOfPosts.add(new Post(postId, writer, title, content));
+                        arrayOfPosts.add(new Post(postId, writer, title, content, date));
                     }
                 }
 

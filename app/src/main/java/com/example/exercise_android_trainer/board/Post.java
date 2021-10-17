@@ -8,12 +8,14 @@ public class Post {
     private String title;
     private String content;
     private String writer;
+    private String date;
 
-    public Post(String postId, String writer, String title, String content) {
+    public Post(String postId, String writer, String title, String content, String date) {
         this.id = postId;
         this.title = title;
         this.writer = writer;
         this.content = content;
+        this.date = date;
     }
 
     public String getId() { return id; }
@@ -28,6 +30,10 @@ public class Post {
 
     public String getContent() {
         return content;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public static ArrayList<Post> getPosts() {

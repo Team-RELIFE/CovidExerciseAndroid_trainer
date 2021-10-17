@@ -10,16 +10,16 @@
     android:id="@+id/rlLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/main_blue">
 
     <TextView
         android:id="@+id/board_tv"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
         android:text="예약 가능한 PT 목록"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/roundshape"
-        android:backgroundTint="#E6E6E6">
+        android:backgroundTint="@color/white">
 
         <EditText
             android:id="@+id/search_et"
@@ -56,11 +56,12 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent">-->
     <ListView
+        android:paddingTop="10dp"
         android:id="@+id/lvPosts"
-        android:layout_below="@id/search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/white"
+        android:layout_below="@id/search"
+        android:background="@color/white"
         android:divider="@android:color/transparent" />
 <!--    </ScrollView>-->
 
