@@ -22,6 +22,64 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/info_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/classList_tv"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="ㅇ건"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/info_msg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/classList_tv"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/info_msg"
+        android:text="의 새로운 신청 내역과 "/>
+
+    <TextView
+        android:id="@+id/info_msg3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/classList_tv"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/info_msg2"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="ㅇ건" />
+
+    <TextView
+        android:id="@+id/info_msg4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/classList_tv"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/info_msg3"
+        android:text="의 승인 완료된 건이 있습니다."/>
+
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/info_msg"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/spinner_background"
+        android:paddingVertical="5dp" />
+
 <!--    <ScrollView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent">-->
@@ -29,11 +87,11 @@
         android:id="@+id/lvItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/classList_tv"
+        android:layout_below="@id/spinner"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
         android:divider="@android:color/transparent" />
-<!--    </ScrollView>-->
+    <!--    </ScrollView>-->
 
 </RelativeLayout>
 

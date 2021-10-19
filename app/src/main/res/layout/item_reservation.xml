@@ -8,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp">
+        android:layout_height="190dp"
+        android:paddingHorizontal="15dp">
 
         <RelativeLayout
             android:id="@+id/post_frame"
@@ -119,7 +120,7 @@
 
             <Button
                 android:id="@+id/acceptBtn"
-                android:layout_width="170dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dateTv"
                 android:layout_marginLeft="20dp"
@@ -129,10 +130,9 @@
 
             <Button
                 android:id="@+id/rejectBtn"
-                android:layout_width="170dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dateTv"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/acceptBtn"
                 android:text="거절"></Button>

@@ -1,40 +1,48 @@
-package com.example.exercise_android_trainer.reservation;
+package com.example.exercise_android_trainer;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.exercise_android_trainer.R;
-import com.example.exercise_android_trainer.User;
+import com.example.exercise_android_trainer.board.CustomListActivity;
+import com.example.exercise_android_trainer.board.Post;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class ProcessReservation extends AppCompatActivity {
+public class GetPostsActivity2 extends AppCompatActivity {
+
+    public ArrayList<Post> posts = new ArrayList<Post>();
+    String page = "";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_list2);
+        setContentView(R.layout.loading);
+
+        connectDB();
     }
 
-    protected void ConnectServer(int id, int reply){
 
-        System.out.println("예약처리 : " + id);
+    public void connectDB(){
 
-        //TODO : ip 주소 매번 수정해주기..ㅠㅠ
-        final String SIGNIN_URL = "http://192.168.219.105:8080/" + "processReservation.jsp";
-        final String urlSuffix = "?id=" + id + "&reply=" + reply;
-        //Log.d("urlSuffix", urlSuffix);
+        ArrayList<Post> posts = new ArrayList<Post>();
 
-        class process extends AsyncTask<String, Void, String> {
+        //                         http://서버 ip:포트번호(tomcat 8080포트 사용)/DB연동하는 jsp파일
+        final String SIGNIN_URL = getString(R.string.db_server)+"getPosts.jsp";
+
+        class UserPost extends AsyncTask<String, Void, String> {
 
             //스레드 관련 및 ui와의 통신을 위한 함수들이 구현되어 있음
 
@@ -47,30 +55,42 @@ public class ProcessReservation extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s); // s : DB로부터 리턴된 값
 
-                //s == null -> db 통신 오류, s의 길이는 기본 2이므로 s.length == 2일 때 검색된 값이 없는 것으로 취급
-
                 if (s != null) { //리턴 값이 null이 아니면 jsonArray로 값 목록을 받음
-
                     try{
-                        if (s.contains("success")) { //검색된 값이 없음
-                            //Toast.makeText(getApplicationContext(), "정상적으로 처리되었습니다.", Toast.LENGTH_SHORT).show();
+                        if (s.length() <= 2) { //검색된 값이 없음
+                            Toast toast = Toast.makeText(getApplicationContext(), "작성된 글이 없습니다.", Toast.LENGTH_SHORT);
+                            toast.show();
                         }
                         else {
-                            //Toast.makeText(getApplicationContext(), "오류 발생", Toast.LENGTH_SHORT).show();
+                            JSONArray jArr = new JSONArray(s);;
+                            JSONObject json = new JSONObject();
+
+                            for (int i=0; i<jArr.length();i++) {
+                                json = jArr.getJSONObject(i);
+
+                                String title = json.getString("title");
+                                ArrayList titleList = new ArrayList();
+                                titleList.add(title);
+
+                                System.out.println("title : " + title);
+                            }
                         }
-                    }catch(Exception e) {
+
+                    } catch(Exception e) {
                         e.printStackTrace();
                     }
                 }
+
                 else {
-                    //Toast.makeText(getApplicationContext(), "서버와의 통신에 문제가 발생했습니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "서버와의 통신에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             protected String doInBackground(String... params) {
                 BufferedReader bufferedReader = null;
-                String line = null, page = "";
+                String line = null;
+                page = "";
 
                 try {
                     HttpURLConnection conn = null;
@@ -85,7 +105,7 @@ public class ProcessReservation extends AppCompatActivity {
 
 
                     //strParams에 데이터를 담아 서버로 보냄
-                    String strParams = "id=" + id + "&reply=" + reply;
+                    String strParams = "";
 
                     OutputStream os = conn.getOutputStream();
                     os.write(strParams.getBytes("UTF-8"));
@@ -94,7 +114,7 @@ public class ProcessReservation extends AppCompatActivity {
 
                     // 통신 체크 : 연결 실패시 null 반환하고 종료
                     if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                        Log.d("reserveActivity", "통신 오류");
+                        Log.d("GetPostsActivity", "통신 오류");
                         return null;
                     }
 
@@ -113,14 +133,12 @@ public class ProcessReservation extends AppCompatActivity {
                 catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 return null;
             }
         }
 
-        process pr = new process();
-        pr.execute(urlSuffix);
+        UserPost up = new UserPost();
+        up.execute();
+
     }
-
-
 }

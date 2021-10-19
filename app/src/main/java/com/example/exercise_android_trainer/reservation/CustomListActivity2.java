@@ -1,3 +1,4 @@
+
 package com.example.exercise_android_trainer.reservation;
 
 import android.app.Activity;
@@ -5,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,12 +32,19 @@ import java.util.Collections;
 
 public class CustomListActivity2 extends AppCompatActivity {
 
+    ListView listView;
+    TextView title, info_msg_status0, info_msg_status1;
+    int num_status0, num_status1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_list2);
+        listView = findViewById(R.id.lvItem);
+        title = findViewById(R.id.classList_tv);
+        info_msg_status0 = findViewById(R.id.info_msg);
+        info_msg_status1 = findViewById(R.id.info_msg3);
 
-        TextView title = findViewById(R.id.classList_tv);
         title.setText(User.nickname + "님의 클래스");
 
         // 당겨서 새로고침
@@ -48,8 +58,27 @@ public class CustomListActivity2 extends AppCompatActivity {
             }
         });
 
-        ListView listView = findViewById(R.id.lvItem);
-        populatePostsList();
+
+        // 스피너
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.status_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                populatePostsList(i);
+                info_msg_status0.setText(String.valueOf(num_status0) + "건");
+                info_msg_status1.setText(String.valueOf(num_status1) + "건");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
         //항목을 클릭하면 해당 글 상세보기 페이지로 데이터를 넘긴 후 이동
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,8 +96,11 @@ public class CustomListActivity2 extends AppCompatActivity {
         });
     }
 
-    private void populatePostsList() {
+    private void populatePostsList(int condition) {
         ArrayList<Item> arrayOfReservations = Item.getItem();
+        ArrayList<Item> arrayOfReservations_status0 = Item.getItem();
+        ArrayList<Item> arrayOfReservations_status1 = Item.getItem();
+        num_status0 = 0; num_status0 = 0;
 
         Intent intent = new Intent(this.getIntent());
         String s = intent.getStringExtra("result");
@@ -92,8 +124,18 @@ public class CustomListActivity2 extends AppCompatActivity {
                         int status = json.getInt("status");
                         int post = json.getInt("post");
 
+                        // status에 따라 item을 분류
+                        if (status == 0) {
+                            arrayOfReservations_status0.add(new Item(id, trainer, trainee, status, post));
+                        } else {
+                            arrayOfReservations_status1.add(new Item(id, trainer, trainee, status, post));
+                        }
                         arrayOfReservations.add(new Item(id, trainer, trainee, status, post));
                     }
+
+                    num_status0 = arrayOfReservations_status0.size();
+                    num_status1 = arrayOfReservations_status1.size();
+
                 }
 
             } catch(Exception e) {
@@ -106,10 +148,14 @@ public class CustomListActivity2 extends AppCompatActivity {
         }
 
         Collections.reverse(arrayOfReservations); //늦게 생성된 데이터가 위로 오도록 순서 반전
+
         CustomItemAdapter adapter = new CustomItemAdapter(this, arrayOfReservations);
-        // Attach the adapter to a ListView
+        if (condition == 1) {
+            adapter = new CustomItemAdapter(this, arrayOfReservations_status0);
+        } else if (condition == 2) {
+            adapter = new CustomItemAdapter(this, arrayOfReservations_status1);
+        }
         ListView listView = (ListView) findViewById(R.id.lvItem);
         listView.setAdapter(adapter);
-
     }
 }
