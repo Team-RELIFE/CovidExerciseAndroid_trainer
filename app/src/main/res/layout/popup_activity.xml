@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="300dp"
+    android:layout_height="wrap_content">
+
+    <!-- //end 타이틀바 -->
+    <!-- Notice -->
+    <TableLayout
+        android:padding="24dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <TableRow>
+            <TextView
+                android:id="@+id/blank"
+                android:textSize="17sp"
+                android:textColor="#000"
+                android:alpha="0.87"
+                android:layout_marginBottom="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="100"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:scrollHorizontally="false"
+                android:text="진행 정보"
+                android:singleLine="false" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:alpha="0.87"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="시작일 / 종료일"
+                />
+            <TextView
+                android:id="@+id/model"
+                android:textSize="13sp"
+                android:textColor="#000"
+                android:alpha="0.87"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="100"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:scrollHorizontally="false"
+                android:singleLine="false" />
+
+        </TableRow>
+        <TableRow
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:alpha="0.87"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="소개글"/>
+            <TextView
+                android:id="@+id/price"
+                android:layout_marginLeft="20dp"
+                android:textSize="13sp"
+                android:textColor="#000"
+                android:alpha="0.87"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:alpha="0.87"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Room ID" />
+            <TextView
+                android:id="@+id/spec"
+                android:textSize="13sp"
+                android:layout_marginLeft="20dp"
+                android:textColor="#000"
+                android:alpha="0.87"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="100"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:scrollHorizontally="false"
+                android:singleLine="false"/>
+        </TableRow>
+    </TableLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="#ffffff"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/pt_btn"
+            android:onClick="mGoPT"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="PT룸 접속"
+            android:textColor="@color/white"
+            android:background="@color/main_blue"
+            android:tint="#000000"
+            android:textSize="14dp" />
+
+        <Button
+            android:layout_weight="1"
+            android:onClick="mOnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="  닫기  "
+            android:textColor="@color/black"
+            android:background="#e5e5e5"
+            android:tint="#000000"
+            android:textSize="14dp"/>
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/shareBtn"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="#ffffff"-->
+<!--            android:src="@android:drawable/ic_menu_share"-->
+<!--            android:tint="#000000" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/copyBtn"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="#ffffff"-->
+<!--            android:src="?attr/actionModePasteDrawable"-->
+<!--            android:tint="#000000" />-->
+    </LinearLayout>
+</LinearLayout>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.exercise_android_trainer.R;
@@ -38,16 +39,18 @@ public class CustomItemAdapter extends ArrayAdapter {
         Button rejectBtn = convertView.findViewById(R.id.rejectBtn);
         TextView status0 = convertView.findViewById(R.id.statusTv0);
         TextView status1 = convertView.findViewById(R.id.statusTv1);
+        TextView address = convertView.findViewById(R.id.address);
+        ImageView alarmImg = convertView.findViewById(R.id.alarmImg);
 
         // 예약 신청 승인 여부에 따라 다르게 표시
         if (item.getStatus() == 0) { //승인되지 않은 상태
             status0.setVisibility(View.VISIBLE);
             status1.setVisibility(View.INVISIBLE);
+            address.setVisibility(View.INVISIBLE);
+            alarmImg.setVisibility(View.INVISIBLE);
         } else if (item.getStatus() == 1) { //승인된 상태
             status1.setVisibility(View.VISIBLE);
             status0.setVisibility(View.INVISIBLE);
-            acceptBtn.setVisibility(View.INVISIBLE);
-            rejectBtn.setText("취소");
         }
 
         acceptBtn.setOnClickListener( view -> {
